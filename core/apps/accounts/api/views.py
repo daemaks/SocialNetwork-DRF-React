@@ -1,8 +1,18 @@
-from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializer import RegisterSerializer
 
 
-@api_view(["GET"])
-def getRoutes(request):
-    route = ["/api/test"]
-    return Response(route)
+class CustomCreateAccount(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            created_user = serializer.save()
+            if created_user:
+                return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

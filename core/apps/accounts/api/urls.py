@@ -1,5 +1,8 @@
 from django.urls import path
 
-from . import views
+from .views import CustomCreateAccount
 
-urlpatterns = [path("", views.getRoutes)]
+urlpatterns = [
+    # Registration
+    path("register/", CustomCreateAccount.as_view(), name="create_user")
+]

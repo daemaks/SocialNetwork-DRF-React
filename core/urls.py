@@ -8,8 +8,10 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    # Admin Panel
     path("admin/", admin.site.urls),
-    path("api/accounts/", include("core.apps.accounts.api.urls")),
+    # Account
+    path("api/user/", include("core.apps.accounts.api.urls")),
     path(
         "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
     ),
