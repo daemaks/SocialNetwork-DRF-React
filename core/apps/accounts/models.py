@@ -37,6 +37,10 @@ class CustomAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
+    class CustomAccountManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(is_active=True)
+
     email = models.EmailField(_("Email"), max_length=60, unique=True)
     username = models.CharField(_("Username"), max_length=100, unique=True)
     # profile_pic = models.ImageField(upload_to='avatar/', blank=True, null=True)
@@ -49,6 +53,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["username"]
 
     objects = CustomAccountManager()
+    active_objects = CustomAccountManager()
 
     def __str__(self):
         return self.username
