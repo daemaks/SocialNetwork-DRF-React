@@ -17,7 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return instance
 
 
-class UserSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ("id", "username", "about", "date_joined", "is_staff")
+        fields = ("username", "about", "date_joined", "is_staff")

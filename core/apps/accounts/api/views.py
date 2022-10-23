@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializer import RegisterSerializer, UserSerializer
+from .serializer import AccountSerializer, RegisterSerializer
 
 
 class CustomCreateAccount(APIView):
@@ -22,4 +22,10 @@ class CustomCreateAccount(APIView):
 class UserList(generics.ListAPIView):
     permission_classes = [AllowAny]
     queryset = Account.active_objects.all()
-    serializer_class = UserSerializer
+    serializer_class = AccountSerializer
+
+
+class UserDetails(generics.RetrieveAPIView):
+    queryset = Account.active_objects.all()
+    serializer_class = AccountSerializer
+    lookup_field = "username"
