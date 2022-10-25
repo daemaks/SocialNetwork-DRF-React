@@ -1,5 +1,7 @@
+from core.apps.accounts.api.viewsets import UpgradedModelViewSet
 from core.apps.accounts.models import Account
-from rest_framework import generics, status
+from core.apps.accounts.permissions import IsOwnerOrReadOnly
+from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,13 +21,11 @@ class CustomCreateAccount(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserList(generics.ListAPIView):
+class UserViewSet(UpgradedModelViewSet):
     permission_classes = [AllowAny]
-    queryset = Account.active_objects.all()
+    queryset = Account.objects.all()
     serializer_class = AccountSerializer
-
-
-class UserDetails(generics.RetrieveAPIView):
-    queryset = Account.active_objects.all()
-    serializer_class = AccountSerializer
-    lookup_field = "username"
+    permission_classes_by_action = {
+        "update": [IsOwnerOrReadOnly],
+        "destroy": [IsOwnerOrReadOnly],
+    }

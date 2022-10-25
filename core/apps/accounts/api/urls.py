@@ -1,11 +1,15 @@
 from django.urls import path
 
-from .views import CustomCreateAccount, UserDetails, UserList
+from .views import CustomCreateAccount, UserViewSet
+
+user_action = UserViewSet.as_view(
+    {"get": "retrieve", "put": "update", "delete": "destroy"}
+)
 
 urlpatterns = [
     # Users Data
-    path("", UserList.as_view(), name="user_list"),
-    path("<str:username>/", UserDetails.as_view(), name="user_details"),
+    path("", UserViewSet.as_view({"get": "list"}), name="user_list"),
+    path("<int:pk>/", user_action, name="user_details"),
     # Registration
     path("register/", CustomCreateAccount.as_view(), name="create_user"),
 ]
