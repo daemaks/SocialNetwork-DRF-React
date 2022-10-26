@@ -13,7 +13,13 @@ class UserAdminConfig(UserAdmin):
     )
     list_filter = ("email", "username", "is_active", "is_staff")
     ordering = ("-date_joined",)
-    list_display = ("email", "username", "is_active", "is_staff")
+    list_display = (
+        "email",
+        "username",
+        "profile_pic",
+        "is_active",
+        "is_staff",
+    )
     fieldsets = (
         (
             None,
@@ -21,6 +27,7 @@ class UserAdminConfig(UserAdmin):
                 "fields": (
                     "email",
                     "username",
+                    "profile_pic",
                 )
             },
         ),

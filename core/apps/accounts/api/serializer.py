@@ -20,4 +20,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ("id", "username", "about", "date_joined", "is_staff")
+        fields = (
+            "id",
+            "username",
+            "profile_pic",
+            "about",
+            "date_joined",
+            "is_staff",
+        )

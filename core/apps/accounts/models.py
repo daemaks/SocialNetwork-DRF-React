@@ -3,8 +3,17 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+def validate_image(fieldfile_obj):
+    filesize = fieldfile_obj.file.size
+    megabyte_limit = 2.0
+    if filesize > megabyte_limit * 1024 * 1024:
+        raise ValidationError(f"Max file size is {str(megabyte_limit)}MB")
 
 
 class CustomAccountManager(BaseUserManager):
@@ -39,7 +48,14 @@ class CustomAccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("Email"), max_length=60, unique=True)
     username = models.CharField(_("Username"), max_length=100, unique=True)
-    # profile_pic = models.ImageField(upload_to='avatar/', blank=True, null=True)
+    profile_pic = models.ImageField(
+        _("Avatar"),
+        upload_to="avatar/",
+        blank=True,
+        null=True,
+        validators=[validate_image, validate_image_file_extension],
+        help_text=("Not required. Maximum file size allowed is 2Mb"),
+    )
     about = models.TextField(_("About"), max_length=500, blank=True)
     date_joined = models.DateTimeField(_("Joined Date"), auto_now_add=True)
     is_active = models.BooleanField(default=True)
