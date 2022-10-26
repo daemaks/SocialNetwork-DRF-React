@@ -1,12 +1,12 @@
-from core.apps.accounts.api.viewsets import UpgradedModelViewSet
 from core.apps.accounts.models import Account
-from core.apps.accounts.permissions import IsOwnerOrReadOnly
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .permissions import IsOwnerOrReadOnly
 from .serializer import AccountSerializer, RegisterSerializer
+from .viewsets import UpgradedModelViewSet
 
 
 class CustomCreateAccount(APIView):
