@@ -3,13 +3,15 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .permissions import IsOwnerOrReadOnly
 from .serializer import AccountSerializer, RegisterSerializer
 from .viewsets import UpgradedModelViewSet
 
 
-class CustomCreateAccount(APIView):
+# Register
+class CustomCreateAccountView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -19,6 +21,19 @@ class CustomCreateAccount(APIView):
             if created_user:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# Logout
+class BlacklistTokenView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserViewSet(UpgradedModelViewSet):

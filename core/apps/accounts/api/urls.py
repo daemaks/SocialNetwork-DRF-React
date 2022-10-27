@@ -8,4 +8,6 @@ urlpatterns = [
     path("<int:pk>/", actions.user_detail, name="user_details"),
     # Registration
     path("register/", actions.register, name="create_user"),
+    # Logout
+    path("logout/", actions.logout, name="logout"),
 ]
