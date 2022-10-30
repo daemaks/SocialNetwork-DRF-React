@@ -30,17 +30,11 @@ def test_register_user_fail():
 
 
 @pytest.mark.django_db
-def test_login_user():
-    payload = {
-        "email": "example@mail.com",
-        "username": "example",
-        "password": "example",
-    }
-    client.post("http://127.0.0.1:8000/api/user/register/", payload)
+def test_login_user(account):
 
     response = client.post(
         "http://127.0.0.1:8000/api/token/",
-        {"email": "example@mail.com", "password": "example"},
+        {"email": "example@test.com", "password": "testtest"},
     )
 
     assert response.status_code == 200
