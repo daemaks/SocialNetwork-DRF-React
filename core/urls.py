@@ -18,6 +18,8 @@ urlpatterns = [
     path(
         "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
     ),
+    # Threads
+    path("api/threads", include("core.apps.threads.api.urls")),
 ]
 
 if settings.DEBUG:
