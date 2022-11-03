@@ -22,7 +22,9 @@ class Community(models.Model):
     members = models.ManyToManyField(Account)
 
     class Meta:
-        pass
+        verbose_name = _("Community")
+        verbose_name_plural = _("Communities")
+        ordering = ["-members"]
 
 
 class Tag(models.Model):
@@ -39,7 +41,8 @@ class Tag(models.Model):
     )
 
     class Meta:
-        pass
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
 
 class Threard(models.Model):
@@ -68,6 +71,7 @@ class Threard(models.Model):
     content = models.TextField(
         _("Content"),
         help_text=_("Not requiered. Max length - 500"),
+        max_length=500,
         blank=True,
         null=True,
     )
@@ -75,14 +79,33 @@ class Threard(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        pass
+        verbose_name = _("Thread")
+        verbose_name_plural = _("Threads")
+        ordering = ["-created_at"]
 
 
 class Comment(models.Model):
-    pass
+    author = models.ForeignKey(
+        Account, on_delete=models.CASCADE, blank=False, null=False
+    )
+    thread = models.ForeignKey(
+        Threard, on_delete=models.CASCADE, blank=False, null=False
+    )
+    text = models.TextField(
+        _("Text"),
+        help_text=_("Requiered. Max length - 300"),
+        max_length=300,
+        blank=False,
+        null=False,
+        unique=False,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        pass
+        verbose_name = _("Comment")
+        verbose_name_plural = _("Comments")
+        ordering = ["-created_at"]
 
 
 class Likes(models.Model):
