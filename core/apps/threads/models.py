@@ -19,7 +19,9 @@ class Community(models.Model):
         blank=True,
         null=True,
     )
-    members = models.ManyToManyField(Account)
+    members = models.ManyToManyField(
+        Account, related_name="Members", blank=True
+    )
 
     class Meta:
         verbose_name = _("Community")
@@ -37,7 +39,11 @@ class Tag(models.Model):
         null=False,
     )
     communities = models.ForeignKey(
-        Community, on_delete=models.PROTECT, blank=True, null=True
+        Community,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="communities",
     )
 
     class Meta:
@@ -45,7 +51,7 @@ class Tag(models.Model):
         verbose_name_plural = _("Tags")
 
 
-class Threard(models.Model):
+class Thread(models.Model):
     title = models.CharField(
         _("Title"),
         help_text=_("Not requiered. Max Length - 150"),
@@ -59,14 +65,14 @@ class Threard(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        unique=False,
+        related_name="author",
     )
     community = models.ForeignKey(
         Community,
         on_delete=models.PROTECT,
         blank=False,
         null=False,
-        unique=False,
+        related_name="community",
     )
     content = models.TextField(
         _("Content"),
@@ -86,10 +92,18 @@ class Threard(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(
-        Account, on_delete=models.CASCADE, blank=False, null=False
+        Account,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="comment",
     )
     thread = models.ForeignKey(
-        Threard, on_delete=models.CASCADE, blank=False, null=False
+        Thread,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="thread",
     )
     text = models.TextField(
         _("Text"),
@@ -109,7 +123,21 @@ class Comment(models.Model):
 
 
 class Likes(models.Model):
-    pass
+    thread = models.ForeignKey(
+        Thread,
+        on_delete=models.CASCADE,
+        related_name="thread",
+        blank=False,
+        null=False,
+    )
+    user = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+        related_name="user",
+        blank=False,
+        null=False,
+    )
 
     class Meta:
-        pass
+        verbose_name = _("Like")
+        verbose_name_plural = _("Likes")
