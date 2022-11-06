@@ -1,6 +1,15 @@
 from core.apps.accounts.models import Account
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+def validate_image(fieldfile_obj):
+    filesize = fieldfile_obj.file.size
+    megabyte_limit = 2.0
+    if filesize > megabyte_limit * 1024 * 1024:
+        raise ValidationError(f"Max file size is {str(megabyte_limit)}MB")
 
 
 class Community(models.Model):
@@ -19,14 +28,22 @@ class Community(models.Model):
         blank=True,
         null=True,
     )
+    com_pic = models.ImageField(
+        _("Community picture"),
+        upload_to="community_picture/",
+        blank=True,
+        null=True,
+        validators=[validate_image, validate_image_file_extension],
+        help_text=("Not required. Maximum file size allowed is 2Mb"),
+    )
     members = models.ManyToManyField(
-        Account, related_name="Members", blank=True
+        Account,
+        blank=True,
     )
 
     class Meta:
         verbose_name = _("Community")
         verbose_name_plural = _("Communities")
-        ordering = ["-members"]
 
 
 class Tag(models.Model):
@@ -43,7 +60,6 @@ class Tag(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
-        related_name="communities",
     )
 
     class Meta:
@@ -65,14 +81,12 @@ class Thread(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="author",
     )
     community = models.ForeignKey(
         Community,
         on_delete=models.PROTECT,
         blank=False,
         null=False,
-        related_name="community",
     )
     content = models.TextField(
         _("Content"),
@@ -80,6 +94,14 @@ class Thread(models.Model):
         max_length=500,
         blank=True,
         null=True,
+    )
+    profile_pic = models.ImageField(
+        _("Thread picture"),
+        upload_to="thread_picture/",
+        blank=True,
+        null=True,
+        validators=[validate_image, validate_image_file_extension],
+        help_text=("Not required. Maximum file size allowed is 2Mb"),
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -96,14 +118,12 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="comment",
     )
     thread = models.ForeignKey(
         Thread,
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="thread",
     )
     text = models.TextField(
         _("Text"),
@@ -126,14 +146,12 @@ class Likes(models.Model):
     thread = models.ForeignKey(
         Thread,
         on_delete=models.CASCADE,
-        related_name="thread",
         blank=False,
         null=False,
     )
     user = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
-        related_name="user",
         blank=False,
         null=False,
     )
