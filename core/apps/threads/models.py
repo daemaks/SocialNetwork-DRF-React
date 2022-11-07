@@ -12,6 +12,21 @@ def validate_image(fieldfile_obj):
         raise ValidationError(f"Max file size is {str(megabyte_limit)}MB")
 
 
+class Tag(models.Model):
+    title = models.CharField(
+        _("Title"),
+        help_text=_("Requiered. Max Length - 30"),
+        max_length=30,
+        unique=True,
+        blank=False,
+        null=False,
+    )
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
+
+
 class Community(models.Model):
     title = models.CharField(
         _("Title"),
@@ -36,6 +51,12 @@ class Community(models.Model):
         validators=[validate_image, validate_image_file_extension],
         help_text=("Not required. Maximum file size allowed is 2Mb"),
     )
+    tag = models.ForeignKey(
+        Tag,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+    )
     members = models.ManyToManyField(
         Account,
         blank=True,
@@ -44,27 +65,6 @@ class Community(models.Model):
     class Meta:
         verbose_name = _("Community")
         verbose_name_plural = _("Communities")
-
-
-class Tag(models.Model):
-    title = models.CharField(
-        _("Title"),
-        help_text=_("Requiered. Max Length - 30"),
-        max_length=30,
-        unique=True,
-        blank=False,
-        null=False,
-    )
-    communities = models.ForeignKey(
-        Community,
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True,
-    )
-
-    class Meta:
-        verbose_name = _("Tag")
-        verbose_name_plural = _("Tags")
 
 
 class Thread(models.Model):
