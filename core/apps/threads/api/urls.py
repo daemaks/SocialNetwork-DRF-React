@@ -9,4 +9,9 @@ urlpatterns = [
         views.CommunityListView.as_view({"get": "list"}),
         name="community_list",
     ),
+    path(
+        "community/<int:pk>/",
+        views.CommunityListView.as_view({"get": "retrieve"}),
+        name="community_details",
+    ),
 ]
