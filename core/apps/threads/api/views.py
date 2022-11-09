@@ -11,16 +11,17 @@ from .serializer import (
 )
 
 
-class TagListView(viewsets.ReadOnlyModelViewSet):
+class TagViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
 
+    def list(self, request):
+        queryset = Tag.objects.all()
+        serializer = TagSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-class TagDetailsView(APIView):
-    def get(self, request, pk):
-        communities = Community.objects.filter(tag=pk)
-        serializer = TagDetailsSerializer(communities, many=True)
+    def retrieve(self, request, pk):
+        queryset = Community.objects.filter(tag=pk)
+        serializer = TagDetailsSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
