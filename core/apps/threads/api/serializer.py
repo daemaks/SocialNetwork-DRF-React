@@ -8,6 +8,12 @@ class TagSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class TagDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Community
+        fields = ["id", "title"]
+
+
 class CommunitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Community
