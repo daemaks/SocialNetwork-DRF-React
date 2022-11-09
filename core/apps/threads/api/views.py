@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializer import (
+    CommentSerializer,
     CommunitySerializer,
     TagDetailsSerializer,
     TagSerializer,
@@ -29,3 +30,10 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
+
+
+class CommentView(APIView):
+    def get(self, request, pk):
+        queryset = Comment.objects.filter(thread=pk)
+        serializer = CommentSerializer(queryset, many=True)
+        return Response(serializer.data)

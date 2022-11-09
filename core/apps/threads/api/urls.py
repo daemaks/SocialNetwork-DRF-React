@@ -21,4 +21,10 @@ urlpatterns = [
         views.CommunityListView.as_view({"get": "retrieve"}),
         name="community_details",
     ),
+    # Comment
+    path(
+        "thread/<int:pk>/comments",
+        views.CommentView.as_view(),
+        name="comments_of_thread",
+    ),
 ]
