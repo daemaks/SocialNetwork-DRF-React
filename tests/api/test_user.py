@@ -75,6 +75,22 @@ def test_change_other_user_data(api_account):
     assert response.status_code == 403
 
 
+#####
+@pytest.mark.django_db
+def test_change_other_user_data_by_admin(api_admin_account):
+    url = "http://127.0.0.1:8000/api/user/2/"
+    payload = {
+        "email": "example@mail.com",
+        "username": "example",
+        "password": "example",
+    }
+    client.post(reverse("create_user"), payload)
+    response = api_admin_account.put(url, {"username": "tester"})
+
+    assert response.status_code == 403
+
+
+####
 @pytest.mark.django_db
 def test_delete_user_data(api_account):
     url = "http://127.0.0.1:8000/api/user/1/"
@@ -94,3 +110,17 @@ def test_delete_other_user_data(api_account):
     response = api_account.delete(url)
 
     assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_delete_other_user_data_by_admin(api_admin_account):
+    url = "http://127.0.0.1:8000/api/user/2/"
+    payload = {
+        "email": "example@mail.com",
+        "username": "example",
+        "password": "example",
+    }
+    client.post(reverse("create_user"), payload)
+    response = api_admin_account.delete(url)
+
+    assert response.status_code == 204

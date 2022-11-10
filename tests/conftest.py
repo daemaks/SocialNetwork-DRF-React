@@ -30,3 +30,13 @@ def api_account(db, accounts_factory):
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
     return client
+
+
+@pytest.fixture
+def api_admin_account(db, accounts_factory):
+    user = accounts_factory.create(is_staff=True)
+    client = APIClient()
+    refresh = RefreshToken.for_user(user)
+    client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
+
+    return client
