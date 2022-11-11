@@ -1,11 +1,10 @@
 from core.apps.accounts.models import Account
-from rest_framework import status
+from rest_framework import mixins, status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from tools.permissions import IsOwnerOrReadOnly
-from tools.viewsets import UpgradedModelViewSet
 
 from .serializer import AccountSerializer, RegisterSerializer
 
@@ -36,11 +35,13 @@ class BlacklistTokenView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserViewSet(UpgradedModelViewSet):
-    permission_classes = [AllowAny]
+class UserViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    permission_classes_by_action = {
-        "update": [IsOwnerOrReadOnly],
-        "destroy": [IsOwnerOrReadOnly],
-    }
