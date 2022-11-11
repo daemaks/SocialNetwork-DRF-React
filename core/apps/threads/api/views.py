@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from tools.permissions import IsOwnerOrReadOnly
 
 from .serializer import (
     CommentSerializer,
@@ -18,12 +19,12 @@ class TagViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = Tag.objects.all()
         serializer = TagSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=200)
 
     def retrieve(self, request, pk):
         queryset = Community.objects.filter(tag=pk)
         serializer = TagDetailsSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=200)
 
 
 class CommunityListView(viewsets.ReadOnlyModelViewSet):
@@ -32,8 +33,24 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommunitySerializer
 
 
-class CommentView(APIView):
-    def get(self, request, pk):
+# class CommentView(APIView):
+#     permission_classes = [IsOwnerOrReadOnly]
+
+#     def get(self, request, pk):
+#         queryset = Comment.objects.filter(thread=pk)
+#         serializer = CommentSerializer(queryset, many=True)
+#         return Response(serializer.data)
+
+
+class CommentViewSet(viewsets.ViewSet):
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def list(self, request, pk):
         queryset = Comment.objects.filter(thread=pk)
         serializer = CommentSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=200)
+
+    def retrieve(self, request, pk):
+        queryset = Comment.objects.get(pk=pk)
+        serializer = CommentSerializer(queryset, many=False)
+        return Response(serializer.data, status=200)

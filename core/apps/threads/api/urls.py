@@ -23,8 +23,13 @@ urlpatterns = [
     ),
     # Comment
     path(
-        "thread/<int:pk>/comments",
-        views.CommentView.as_view(),
+        "thread/<int:pk>/comments/",
+        views.CommentViewSet.as_view({"get": "list"}),
         name="comments_of_thread",
+    ),
+    path(
+        "comment/<int:pk>/",
+        views.CommentViewSet.as_view({"get": "retrieve"}),
+        name="comment_details",
     ),
 ]
