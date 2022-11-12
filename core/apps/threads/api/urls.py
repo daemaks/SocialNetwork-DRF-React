@@ -21,15 +21,24 @@ urlpatterns = [
         views.CommunityListView.as_view({"get": "retrieve"}),
         name="community_details",
     ),
+    # Threads
+    path(
+        "community/<int:pk>/threads",
+        views.ThreadsViewSet.as_view({"get": "list"}),
+        name="threads_list_of_community",
+    ),
+    path(
+        "", views.ThreadsViewSet.as_view({"get": "list"}), name="threads_list"
+    ),
     # Comment
     path(
         "thread/<int:pk>/comments/",
-        views.CommentViewSet.as_view({"get": "list"}),
+        views.CommentsViewSet.as_view({"get": "list"}),
         name="comments_of_thread",
     ),
     path(
         "comment/<int:pk>/",
-        views.CommentViewSet.as_view({"get": "retrieve"}),
+        views.CommentsViewSet.as_view({"get": "retrieve"}),
         name="comment_details",
     ),
 ]

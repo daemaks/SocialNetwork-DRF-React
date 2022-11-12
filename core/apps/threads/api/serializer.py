@@ -20,6 +20,12 @@ class CommunitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ThreadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thread
+        fields = "__all__"
+
+
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment

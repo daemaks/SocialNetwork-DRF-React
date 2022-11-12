@@ -10,6 +10,7 @@ from .serializer import (
     CommunitySerializer,
     TagDetailsSerializer,
     TagSerializer,
+    ThreadSerializer,
 )
 
 
@@ -42,7 +43,7 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
 #         return Response(serializer.data)
 
 
-class CommentViewSet(viewsets.ViewSet):
+class CommentsViewSet(viewsets.ViewSet):
     permission_classes = [IsOwnerOrReadOnly]
 
     def list(self, request, pk):
@@ -54,3 +55,17 @@ class CommentViewSet(viewsets.ViewSet):
         queryset = Comment.objects.get(pk=pk)
         serializer = CommentSerializer(queryset, many=False)
         return Response(serializer.data, status=200)
+
+
+class ThreadsViewSet(viewsets.ViewSet):
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def list(self, request, pk=None):
+        if pk:
+            queryset = Thread.objects.filter(community=pk)
+            serializer = ThreadSerializer(queryset, many=True)
+            return Response(serializer.data, status=200)
+        else:
+            queryset = Thread.objects.all()
+            serializer = ThreadSerializer(queryset, many=True)
+            return Response(serializer.data, status=200)
