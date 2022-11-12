@@ -30,6 +30,11 @@ urlpatterns = [
     path(
         "", views.ThreadsViewSet.as_view({"get": "list"}), name="threads_list"
     ),
+    path(
+        "<int:pk>/",
+        views.ThreadsViewSet.as_view({"get": "retrieve"}),
+        name="threads_details",
+    ),
     # Comment
     path(
         "thread/<int:pk>/comments/",

@@ -69,3 +69,8 @@ class ThreadsViewSet(viewsets.ViewSet):
             queryset = Thread.objects.all()
             serializer = ThreadSerializer(queryset, many=True)
             return Response(serializer.data, status=200)
+
+    def retrieve(self, request, pk):
+        queryset = Thread.objects.get(pk=pk)
+        serializer = ThreadSerializer(queryset, many=False)
+        return Response(serializer.data, status=200)
