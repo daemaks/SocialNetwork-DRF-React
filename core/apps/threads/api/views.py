@@ -1,8 +1,9 @@
-from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
 from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
 from tools.permissions import IsOwnerOrReadOnly
 
 from .serializer import (
@@ -34,22 +35,23 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommunitySerializer
 
 
-class ThreadsViewSet(viewsets.ViewSet):
+class ThreadsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
 
     def list(self, request, pk=None):
         if pk:
             queryset = Thread.objects.filter(community=pk)
-            serializer = ThreadSerializer(queryset, many=True)
+            serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            queryset = Thread.objects.all()
-            serializer = ThreadSerializer(queryset, many=True)
+            serializer = self.serializer_class(self.queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk):
         queryset = Thread.objects.get(pk=pk)
-        serializer = ThreadSerializer(queryset, many=False)
+        serializer = self.serializer_class(queryset, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
