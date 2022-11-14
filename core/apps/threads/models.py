@@ -1,8 +1,9 @@
-from core.apps.accounts.models import Account
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from core.apps.accounts.models import Account
 
 
 def validate_image(fieldfile_obj):
@@ -76,7 +77,7 @@ class Thread(models.Model):
         blank=False,
         null=False,
     )
-    author = models.ForeignKey(
+    username = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         blank=False,
@@ -113,7 +114,7 @@ class Thread(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(
+    username = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         blank=False,

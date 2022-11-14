@@ -16,4 +16,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         elif request.method == "DELETE":
             return obj.username == str(request.user) or request.user.is_staff
         # Instance must have an attribute named `owner`.
-        return obj.username == str(request.user)
+        return str(obj.username) == str(request.user)

@@ -1,7 +1,6 @@
 from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
 from tools.permissions import IsOwnerOrReadOnly
@@ -54,15 +53,6 @@ class ThreadsViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(queryset, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request):
-        pass
-
-    def update(self, request, pk):
-        pass
-
-    def destroy(self, request, pk):
-        pass
-
 
 class CommentsViewSet(viewsets.ViewSet):
     permission_classes = [IsOwnerOrReadOnly]
@@ -76,12 +66,3 @@ class CommentsViewSet(viewsets.ViewSet):
         queryset = Comment.objects.get(pk=pk)
         serializer = CommentSerializer(queryset, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def create(self, request):
-        pass
-
-    def update(self, request, pk):
-        pass
-
-    def destroy(self, request, pk):
-        pass
