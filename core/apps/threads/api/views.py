@@ -15,18 +15,20 @@ from .serializer import (
 )
 
 
-class TagViewSet(viewsets.ViewSet):
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
-    def list(self, request):
-        queryset = Tag.objects.all()
-        serializer = TagSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        if self.action == "list":
+            return Tag.objects.all()
+        elif self.action == "retrieve":
+            return Community.objects.filter(tag=self.kwargs["pk"])
 
-    def retrieve(self, request, pk):
-        queryset = Community.objects.filter(tag=pk)
-        serializer = TagDetailsSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_serializer_class(self):
+        if self.action == "list":
+            return TagSerializer
+        elif self.action == "retrieve":
+            return TagDetailsSerializer
 
 
 class CommunityListView(viewsets.ReadOnlyModelViewSet):
