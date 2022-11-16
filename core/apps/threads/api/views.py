@@ -42,10 +42,11 @@ class ThreadsViewSet(viewsets.ModelViewSet):
     serializer_class = ThreadSerializer
 
     def get_queryset(self):
-        if "pk" in self.kwargs:
+        if self.action == "retrieve":
+            return Thread.objects.filter(pk=self.kwargs["pk"])
+        elif self.action == "list" and "pk" in self.kwargs:
             return Thread.objects.filter(community=self.kwargs["pk"])
-        else:
-            return Thread.objects.all()
+        return Thread.objects.all()
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
