@@ -22,8 +22,8 @@ class CommunitySerializer(serializers.ModelSerializer):
 
 
 class ThreadSerializer(serializers.ModelSerializer):
-    username = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
+    username = serializers.PrimaryKeyRelatedField(
+        default=serializers.CurrentUserDefault(), read_only=True
     )
 
     class Meta:
@@ -32,8 +32,8 @@ class ThreadSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
+    username = serializers.PrimaryKeyRelatedField(
+        default=serializers.CurrentUserDefault(), read_only=True
     )
 
     class Meta:

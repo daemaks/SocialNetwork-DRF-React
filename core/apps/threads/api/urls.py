@@ -56,4 +56,9 @@ urlpatterns = [
         views.CommentsViewSet.as_view({"get": "retrieve"}),
         name="comment_details",
     ),
+    path(
+        "comment/<int:pk>/update",
+        views.CommentsViewSet.as_view({"put": "update"}),
+        name="comment_update",
+    ),
 ]

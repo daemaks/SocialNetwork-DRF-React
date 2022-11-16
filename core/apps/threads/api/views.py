@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -36,33 +37,18 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
 
 class ThreadsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
 
-    def list(self, request, pk=None):
-        if pk:
-            queryset = Thread.objects.filter(community=pk)
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        if "pk" in self.kwargs:
+            return Thread.objects.filter(community=self.kwargs["pk"])
         else:
-            serializer = self.serializer_class(self.queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, pk):
-        queryset = Thread.objects.get(pk=pk)
-        serializer = self.serializer_class(queryset, many=False)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            return Thread.objects.all()
 
 
-class CommentsViewSet(viewsets.ViewSet):
+class CommentsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CommentSerializer
 
-    def list(self, request, pk):
-        queryset = Comment.objects.filter(thread=pk)
-        serializer = CommentSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, pk):
-        queryset = Comment.objects.get(pk=pk)
-        serializer = CommentSerializer(queryset, many=False)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        return Comment.objects.filter(thread=self.kwargs["pk"])
