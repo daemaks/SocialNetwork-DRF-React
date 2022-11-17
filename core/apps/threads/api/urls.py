@@ -4,7 +4,11 @@ from . import views
 
 urlpatterns = [
     # Tag
-    path("tag/", views.TagViewSet.as_view({"get": "list"}), name="tag_list"),
+    path(
+        "tag/",
+        views.TagViewSet.as_view({"get": "list"}),
+        name="tag_list",
+    ),
     path(
         "tag/<int:pk>/",
         views.TagViewSet.as_view({"get": "retrieve"}),
@@ -13,13 +17,8 @@ urlpatterns = [
     # Communities
     path(
         "community/",
-        views.CommunityListView.as_view({"get": "list"}),
+        views.CommunityListView.as_view({"get": "list", "get": "retrieve"}),
         name="community_list",
-    ),
-    path(
-        "community/<int:pk>/",
-        views.CommunityListView.as_view({"get": "retrieve"}),
-        name="community_details",
     ),
     # Threads
     path(
@@ -50,12 +49,14 @@ urlpatterns = [
     ),
     path(
         "comment/<int:pk>/",
-        views.CommentsViewSet.as_view({"get": "retrieve"}),
+        views.CommentsViewSet.as_view(
+            {"get": "retrieve", "put": "update", "delete": "destroy"}
+        ),
         name="comment_details",
     ),
-    path(
-        "comment/<int:pk>/update",
-        views.CommentsViewSet.as_view({"put": "update"}),
-        name="comment_update",
-    ),
+    # path(
+    #     "comment/<int:pk>/update",
+    #     views.CommentsViewSet.as_view({"put": "update"}),
+    #     name="comment_update",
+    # ),
 ]

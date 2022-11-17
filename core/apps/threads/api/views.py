@@ -54,4 +54,6 @@ class CommentsViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(thread=self.kwargs["pk"])
+        if self.action == "list":
+            return Comment.objects.filter(thread=self.kwargs["pk"])
+        return Comment.objects.all()
