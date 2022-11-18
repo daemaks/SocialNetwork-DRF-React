@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework import viewsets, status
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
@@ -57,3 +57,19 @@ class CommentsViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             return Comment.objects.filter(thread=self.kwargs["pk"])
         return Comment.objects.all()
+
+
+class LikesView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, pk):
+        likes = Likes.objects.filter(thread=pk).count()
+        return Response(likes, status=status.HTTP_200_OK)
+
+    def post(self, request, pk):
+        try:
+            Likes.objects.get(thread=pk, user=request.user).delete()
+        except:
+            pass
+        likes = Likes.objects.filter(thread=pk).count()
+        return Response(likes)

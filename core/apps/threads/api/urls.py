@@ -54,9 +54,7 @@ urlpatterns = [
         ),
         name="comment_details",
     ),
-    # path(
-    #     "comment/<int:pk>/update",
-    #     views.CommentsViewSet.as_view({"put": "update"}),
-    #     name="comment_update",
-    # ),
+    path(
+        "thread/<int:pk>/likes", views.LikesView.as_view(), name="likes_count"
+    ),
 ]
