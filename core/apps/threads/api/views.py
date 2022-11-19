@@ -70,6 +70,7 @@ class LikesView(APIView):
         try:
             Likes.objects.get(thread=pk, user=request.user).delete()
         except:
-            pass
+            thread = Thread.objects.get(pk=pk)
+            Likes.objects.create(thread=thread, user=request.user)
         likes = Likes.objects.filter(thread=pk).count()
         return Response(likes)
