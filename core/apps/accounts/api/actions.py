@@ -1,8 +1,8 @@
-from .views import BlacklistTokenView, CustomCreateAccountView, UserViewSet
+from . import views
 
-register = CustomCreateAccountView.as_view()
-logout = BlacklistTokenView.as_view()
-user_list = UserViewSet.as_view({"get": "list"})
-user_detail = UserViewSet.as_view(
+register = views.CustomCreateAccountView.as_view()
+logout = views.BlacklistTokenView.as_view()
+user_list = views.UserViewSet.as_view({"get": "list"})
+user_detail = views.UserViewSet.as_view(
     {"get": "retrieve", "put": "update", "delete": "destroy"}
 )

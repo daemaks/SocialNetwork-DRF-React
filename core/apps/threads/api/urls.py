@@ -1,60 +1,52 @@
 from django.urls import path
-
-from . import views
+from . import actions
 
 urlpatterns = [
     # Tag
     path(
         "tag/",
-        views.TagViewSet.as_view({"get": "list"}),
-        name="tag_list",
+        actions.tag_list,
     ),
     path(
         "tag/<int:pk>/",
-        views.TagViewSet.as_view({"get": "retrieve"}),
-        name="tag_details",
+        actions.tag_details,
     ),
     # Communities
     path(
         "community/",
-        views.CommunityListView.as_view({"get": "list", "get": "retrieve"}),
-        name="community_list",
+        actions.community_list,
+    ),
+    path(
+        "community/<int:pk>",
+        actions.community_details,
     ),
     # Threads
     path(
         "community/<int:pk>/threads",
-        views.ThreadsViewSet.as_view({"get": "list"}),
-        name="threads_list_of_community",
+        actions.threads_list_of_community,
     ),
     path(
-        "", views.ThreadsViewSet.as_view({"get": "list"}), name="threads_list"
+        "",
+        actions.treads_list,
     ),
     path(
         "<int:pk>/",
-        views.ThreadsViewSet.as_view(
-            {"get": "retrieve", "put": "update", "delete": "destroy"}
-        ),
-        name="threads_details",
+        actions.threads_details,
     ),
     path(
         "create/",
-        views.ThreadsViewSet.as_view({"post": "create"}),
-        name="threads_create",
+        actions.threads_create,
     ),
     # Comment
     path(
         "thread/<int:pk>/comments/",
-        views.CommentsViewSet.as_view({"get": "list"}),
-        name="comments_of_thread",
+        actions.comments_of_tread,
     ),
     path(
         "comment/<int:pk>/",
-        views.CommentsViewSet.as_view(
-            {"get": "retrieve", "put": "update", "delete": "destroy"}
-        ),
-        name="comment_details",
+        actions.comment_details,
     ),
-    path(
-        "thread/<int:pk>/likes", views.LikesView.as_view(), name="likes_count"
-    ),
+    ##Create Comment!!!
+    # Likes
+    path("thread/<int:pk>/likes", actions.likes),
 ]
