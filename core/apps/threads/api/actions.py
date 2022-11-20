@@ -14,4 +14,5 @@ comments_of_tread = views.CommentsViewSet.as_view({"get": "list"})
 comment_details = views.CommentsViewSet.as_view(
     {"get": "retrieve", "put": "update", "delete": "destroy"}
 )
+comment_create = views.CommentsViewSet.as_view({"post": "create"})
 likes = views.LikesView.as_view()

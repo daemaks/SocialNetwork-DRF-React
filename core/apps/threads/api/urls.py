@@ -46,6 +46,10 @@ urlpatterns = [
         "comment/<int:pk>/",
         actions.comment_details,
     ),
+    path(
+        "comment/create/",
+        actions.comment_create,
+    ),
     ##Create Comment!!!
     # Likes
     path("thread/<int:pk>/likes", actions.likes),
