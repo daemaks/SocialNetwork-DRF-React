@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -12,6 +12,8 @@ from .serializer import (
     TagDetailsSerializer,
     TagSerializer,
     ThreadSerializer,
+    CreateThreadSerializer,
+    CreateCommentSerializer,
 )
 
 
@@ -48,6 +50,11 @@ class ThreadsViewSet(viewsets.ModelViewSet):
             return Thread.objects.filter(community=self.kwargs["pk"])
         return Thread.objects.all()
 
+    def get_serializer_class(self):
+        if self.action == "create":
+            return CreateThreadSerializer
+        return CommentSerializer
+
 
 class CommentsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
@@ -57,6 +64,11 @@ class CommentsViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             return Comment.objects.filter(thread=self.kwargs["pk"])
         return Comment.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return CreateCommentSerializer
+        return ThreadSerializer
 
 
 class LikesView(APIView):

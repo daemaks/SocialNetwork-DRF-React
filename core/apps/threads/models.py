@@ -27,6 +27,9 @@ class Tag(models.Model):
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
 
+    def __str__(self):
+        return self.title
+
 
 class Community(models.Model):
     title = models.CharField(
@@ -66,6 +69,9 @@ class Community(models.Model):
     class Meta:
         verbose_name = _("Community")
         verbose_name_plural = _("Communities")
+
+    def __str__(self):
+        return self.title
 
 
 class Thread(models.Model):
@@ -111,6 +117,9 @@ class Thread(models.Model):
         verbose_name = _("Thread")
         verbose_name_plural = _("Threads")
         ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
