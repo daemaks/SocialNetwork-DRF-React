@@ -9,6 +9,12 @@ register(AccountsFactory)
 register(TagFactory)
 register(CommunityFactory)
 
+
+@pytest.fixture
+def client():
+    return APIClient()
+
+
 # Account Fixture
 @pytest.fixture
 def account(db, accounts_factory):
@@ -25,9 +31,8 @@ def admin_account(db, accounts_factory):
 
 
 @pytest.fixture
-def api_account(db, accounts_factory):
+def api_account(db, accounts_factory, client):
     user = accounts_factory.create()
-    client = APIClient()
     refresh = RefreshToken.for_user(user)
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
@@ -35,9 +40,8 @@ def api_account(db, accounts_factory):
 
 
 @pytest.fixture
-def api_admin_account(db, accounts_factory):
+def api_admin_account(db, accounts_factory, client):
     user = accounts_factory.create(is_staff=True)
-    client = APIClient()
     refresh = RefreshToken.for_user(user)
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
@@ -46,10 +50,10 @@ def api_admin_account(db, accounts_factory):
 
 # Threads Fixture
 @pytest.fixture
-def tag(db, tag_factory):
-    data = tag_factory.create()
-    return data
+def api_tag(db, tag_factory):
+    return tag_factory.create()
 
 
-# @pytest.fixture
-# def comunity
+@pytest.fixture
+def api_community(db, community_factory):
+    return community_factory.create()

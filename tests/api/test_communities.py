@@ -2,13 +2,20 @@ import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
 
-client = APIClient()
+# client = APIClient()
 
 
 @pytest.mark.django_db
-def test_tag_list(tag):
+def test_tag_list(api_tag, client):
     url = reverse("tag_list")
-    responce = client.get(url)
+    response = client.get(url)
 
-    assert responce.status_code == 200
-    assert len(responce.data) == 1
+    assert response.status_code == 200
+    assert len(response.data) == 1
+
+
+@pytest.mark.django_db
+def test_tag_details(api_community, client):
+    url = "http://127.0.0.1:8000/api/threads/tag/1/"
+    response = client.get(url)
+    assert response.status_code == 200

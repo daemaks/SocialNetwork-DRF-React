@@ -32,13 +32,13 @@ class TagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Tag
 
-    title = 'Test'
+    title = "Test"
+
 
 class CommunityFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Community
-    
+
     title = "Test Community"
     description = fake.text()
     tag = factory.SubFactory(TagFactory)
-    
