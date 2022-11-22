@@ -42,3 +42,13 @@ class CommunityFactory(factory.django.DjangoModelFactory):
     title = "Test Community"
     description = fake.text()
     tag = factory.SubFactory(TagFactory)
+
+
+class ThreadsFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Thread
+
+    title = "Test Thread"
+    username = factory.SubFactory(AccountsFactory)
+    community = factory.SubFactory(CommunityFactory)
+    content = fake.text()

@@ -3,11 +3,17 @@ from pytest_factoryboy import register
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .factory import AccountsFactory, TagFactory, CommunityFactory
+from .factory import (
+    AccountsFactory,
+    TagFactory,
+    CommunityFactory,
+    ThreadsFactory,
+)
 
 register(AccountsFactory)
 register(TagFactory)
 register(CommunityFactory)
+register(ThreadsFactory)
 
 
 @pytest.fixture
@@ -57,3 +63,8 @@ def api_tag(db, tag_factory):
 @pytest.fixture
 def api_community(db, community_factory):
     return community_factory.create()
+
+
+@pytest.fixture
+def api_thread(db, threads_factory):
+    return threads_factory.create()
