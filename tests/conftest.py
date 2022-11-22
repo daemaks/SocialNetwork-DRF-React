@@ -3,11 +3,13 @@ from pytest_factoryboy import register
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .factory import AccountsFactory
+from .factory import AccountsFactory, TagFactory, CommunityFactory
 
 register(AccountsFactory)
+register(TagFactory)
+register(CommunityFactory)
 
-
+# Account Fixture
 @pytest.fixture
 def account(db, accounts_factory):
     user = accounts_factory.create()
@@ -40,3 +42,14 @@ def api_admin_account(db, accounts_factory):
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
     return client
+
+
+# Threads Fixture
+@pytest.fixture
+def tag(db, tag_factory):
+    data = tag_factory.create()
+    return data
+
+
+# @pytest.fixture
+# def comunity

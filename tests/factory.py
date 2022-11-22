@@ -1,6 +1,10 @@
 from core.apps.accounts.models import Account
+from core.apps.threads.models import Tag, Community, Thread, Comment
 
+from faker import Faker
 import factory
+
+fake = Faker()
 
 # Account
 
@@ -22,3 +26,19 @@ class AccountsFactory(factory.django.DjangoModelFactory):
             return manager.create_superuser(*args, **kwargs)
         else:
             return manager.create_user(*args, **kwargs)
+
+
+class TagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Tag
+
+    title = 'Test'
+
+class CommunityFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Community
+    
+    title = "Test Community"
+    description = fake.text()
+    tag = factory.SubFactory(TagFactory)
+    
