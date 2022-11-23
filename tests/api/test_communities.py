@@ -12,7 +12,7 @@ def test_tag_list(api_tag, client):
 
 @pytest.mark.django_db
 def test_tag_details(api_community, client):
-    url = "http://127.0.0.1:8000/api/threads/tag/1/"
+    url = reverse("tag_details", kwargs={"pk": "1"})
     response = client.get(url)
     assert response.status_code == 200
 
@@ -27,7 +27,7 @@ def test_community_list(api_community, client):
 
 @pytest.mark.django_db
 def test_community_details(api_community, client):
-    url = "http://127.0.0.1:8000/api/threads/community/1"
+    url = reverse("community_details", kwargs={"pk": "1"})
     response = client.get(url)
 
     assert response.status_code == 200
