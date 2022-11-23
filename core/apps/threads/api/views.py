@@ -53,12 +53,11 @@ class ThreadsViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "create":
             return CreateThreadSerializer
-        return CommentSerializer
+        return ThreadSerializer
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = CommentSerializer
 
     def get_queryset(self):
         if self.action == "list":
@@ -68,7 +67,7 @@ class CommentsViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "create":
             return CreateCommentSerializer
-        return ThreadSerializer
+        return CommentSerializer
 
 
 class LikesView(APIView):
