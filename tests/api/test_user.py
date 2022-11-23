@@ -5,6 +5,7 @@ from rest_framework.test import APIClient
 client = APIClient()
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_register_user():
     payload = {
@@ -18,6 +19,7 @@ def test_register_user():
     assert response.status_code == 201
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_register_user_fail():
     payload = {
@@ -30,6 +32,7 @@ def test_register_user_fail():
     assert response.status_code == 400
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_login_user(account):
     url = reverse("token_obtain_pair")
@@ -42,6 +45,7 @@ def test_login_user(account):
     assert response.status_code == 200
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_login_user_fail(account):
     url = reverse("token_obtain_pair")
@@ -54,6 +58,7 @@ def test_login_user_fail(account):
     assert response.status_code == 401
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_change_user_data(api_account):
     url = "http://127.0.0.1:8000/api/user/1/"
@@ -61,6 +66,7 @@ def test_change_user_data(api_account):
     assert response.status_code == 200
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_change_other_user_data(api_account):
     url = "http://127.0.0.1:8000/api/user/2/"
@@ -75,7 +81,7 @@ def test_change_other_user_data(api_account):
     assert response.status_code == 403
 
 
-#####
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_change_other_user_data_by_admin(api_admin_account):
     url = "http://127.0.0.1:8000/api/user/2/"
@@ -90,7 +96,7 @@ def test_change_other_user_data_by_admin(api_admin_account):
     assert response.status_code == 403
 
 
-####
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_delete_user_data(api_account):
     url = "http://127.0.0.1:8000/api/user/1/"
@@ -98,6 +104,7 @@ def test_delete_user_data(api_account):
     assert response.status_code == 204
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_delete_other_user_data(api_account):
     url = "http://127.0.0.1:8000/api/user/2/"
@@ -112,6 +119,7 @@ def test_delete_other_user_data(api_account):
     assert response.status_code == 403
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_delete_other_user_data_by_admin(api_admin_account):
     url = "http://127.0.0.1:8000/api/user/2/"
