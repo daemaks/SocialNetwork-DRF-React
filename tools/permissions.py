@@ -14,6 +14,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         # Admin can delete account, not change data of user
         elif request.method == "DELETE":
-            return obj.username == str(request.user) or request.user.is_staff
+            return (
+                str(obj.username) == str(request.user) or request.user.is_staff
+            )
         # Instance must have an attribute named `owner`.
         return str(obj.username) == str(request.user)

@@ -47,7 +47,12 @@ def api_account(db, accounts_factory, client):
 
 @pytest.fixture
 def api_admin_account(db, accounts_factory, client):
-    user = accounts_factory.create(is_staff=True)
+    user = accounts_factory.create(
+        is_staff=True,
+        username="admintester",
+        email="admintester@mail.com",
+        password="admintester",
+    )
     refresh = RefreshToken.for_user(user)
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
