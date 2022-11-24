@@ -44,3 +44,11 @@ def test_threads_details_get_method(api_thread):
     response = client.get(url)
 
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_threads_details_get_method_404():
+    url = reverse("threads_details", kwargs={"pk": "0"})
+    response = client.get(url)
+
+    assert response.status_code == 404
