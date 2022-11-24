@@ -81,3 +81,11 @@ def test_thread_update_by_admin(api_admin_account, api_thread):
     response = api_admin_account.put(url, payload)
 
     assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_thread_destroy_by_admin(api_admin_account, api_thread):
+    url = reverse("threads_details", kwargs={"pk": "1"})
+    response = api_admin_account.delete(url)
+
+    assert response.status_code == 204
