@@ -22,16 +22,6 @@ def client():
 
 
 # Account Fixture
-@pytest.fixture
-def account(db, accounts_factory):
-    user = accounts_factory.create()
-    return user
-
-
-@pytest.fixture
-def admin_account(db, accounts_factory):
-    user = accounts_factory.create(name="admin_user", is_staff=True)
-    return user
 
 
 @pytest.fixture

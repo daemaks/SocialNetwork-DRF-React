@@ -1,8 +1,11 @@
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
+from core.apps.accounts.models import Account
 
 client = APIClient()
+
+"""CREATE"""
 
 
 @pytest.mark.django_db
@@ -30,8 +33,11 @@ def test_register_user_fail():
     assert response.status_code == 400
 
 
+"""LOGIN"""
+
+
 @pytest.mark.django_db
-def test_login_user(account):
+def test_login_user(api_account):
     url = reverse("token_obtain_pair")
 
     response = client.post(
@@ -43,7 +49,7 @@ def test_login_user(account):
 
 
 @pytest.mark.django_db
-def test_login_user_fail(account):
+def test_login_user_fail(api_account):
     url = reverse("token_obtain_pair")
 
     response = client.post(
@@ -54,71 +60,69 @@ def test_login_user_fail(account):
     assert response.status_code == 401
 
 
+"""RETRIEVE"""
+
+
 @pytest.mark.django_db
-def test_change_user_data(api_account):
-    url = "http://127.0.0.1:8000/api/user/1/"
+def test_user_retrieve(api_account):
+    url = reverse("user_details", kwargs={"pk": "1"})
+    response = api_account.get(url)
+    data = response.data
+    data_from_db = Account.objects.all().first()
+
+    assert response.status_code == 200
+
+    assert data["id"] == data_from_db.id
+    assert data["username"] == data_from_db.username
+
+
+"""UPDATE"""
+
+
+@pytest.mark.django_db
+def test_user_update_by_owner(api_account):
+    url = reverse("user_details", kwargs={"pk": "1"})
     response = api_account.put(url, {"username": "tester"})
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_change_other_user_data(api_account):
-    url = "http://127.0.0.1:8000/api/user/2/"
-    payload = {
-        "email": "example@mail.com",
-        "username": "example",
-        "password": "example",
-    }
-    client.post(reverse("create_user"), payload)
-    response = api_account.put(url, {"username": "tester"})
+def test_user_update_by_other_user(api_account, api_account_2):
+    url = reverse("user_details", kwargs={"pk": "1"})
+    response = api_account_2.put(url, {"username": "tester"})
 
     assert response.status_code == 403
 
 
 @pytest.mark.django_db
-def test_change_other_user_data_by_admin(api_admin_account):
-    url = "http://127.0.0.1:8000/api/user/2/"
-    payload = {
-        "email": "example@mail.com",
-        "username": "example",
-        "password": "example",
-    }
-    client.post(reverse("create_user"), payload)
+def test_user_update_by_admin(api_account, api_admin_account):
+    url = reverse("user_details", kwargs={"pk": "1"})
     response = api_admin_account.put(url, {"username": "tester"})
 
     assert response.status_code == 403
 
 
+"""DESTROY"""
+
+
 @pytest.mark.django_db
-def test_delete_user_data(api_account):
-    url = "http://127.0.0.1:8000/api/user/1/"
+def test_user_destroy_by_owner(api_account):
+    url = reverse("user_details", kwargs={"pk": "1"})
     response = api_account.delete(url)
     assert response.status_code == 204
 
 
 @pytest.mark.django_db
-def test_delete_other_user_data(api_account):
-    url = "http://127.0.0.1:8000/api/user/2/"
-    payload = {
-        "email": "example@mail.com",
-        "username": "example",
-        "password": "example",
-    }
-    client.post(reverse("create_user"), payload)
-    response = api_account.delete(url)
+def test_user_destroy_by_other_user(api_account, api_account_2):
+    url = reverse("user_details", kwargs={"pk": "1"})
+    response = api_account_2.delete(url)
 
     assert response.status_code == 403
 
 
 @pytest.mark.django_db
-def test_delete_other_user_data_by_admin(api_admin_account):
-    url = "http://127.0.0.1:8000/api/user/2/"
-    payload = {
-        "email": "example@mail.com",
-        "username": "example",
-        "password": "example",
-    }
-    client.post(reverse("create_user"), payload)
+def test_user_destroy_by_admin(api_account, api_admin_account):
+    url = reverse("user_details", kwargs={"pk": "1"})
     response = api_admin_account.delete(url)
 
     assert response.status_code == 204
