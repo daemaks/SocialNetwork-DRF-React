@@ -2,7 +2,6 @@ import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
 from core.apps.threads.models import Thread
-from core.apps.accounts.models import Account
 
 client = APIClient()
 

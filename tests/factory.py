@@ -12,6 +12,7 @@ fake = Faker()
 class AccountsFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Account
+        django_get_or_create = ("username",)
 
     email = "example@test.com"
     username = "user_test"
@@ -52,3 +53,12 @@ class ThreadsFactory(factory.django.DjangoModelFactory):
     username = factory.SubFactory(AccountsFactory)
     community = factory.SubFactory(CommunityFactory)
     content = fake.text()
+
+
+class CommentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Comment
+
+    username = factory.SubFactory(AccountsFactory)
+    thread = factory.SubFactory(ThreadsFactory)
+    text = fake.text()

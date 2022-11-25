@@ -8,12 +8,14 @@ from .factory import (
     TagFactory,
     CommunityFactory,
     ThreadsFactory,
+    CommentFactory,
 )
 
 register(AccountsFactory)
 register(TagFactory)
 register(CommunityFactory)
 register(ThreadsFactory)
+register(CommentFactory)
 
 
 @pytest.fixture
@@ -21,7 +23,7 @@ def client():
     return APIClient()
 
 
-# Account Fixture
+"""Account Fixture"""
 
 
 @pytest.fixture
@@ -60,7 +62,9 @@ def api_admin_account(db, accounts_factory, client):
     return client
 
 
-# Threads Fixture
+"""Threads Fixture"""
+
+
 @pytest.fixture
 def api_tag(db, tag_factory):
     return tag_factory.create()
@@ -74,3 +78,8 @@ def api_community(db, community_factory):
 @pytest.fixture
 def api_thread(db, threads_factory):
     return threads_factory.create()
+
+
+@pytest.fixture
+def api_comment(db, comment_factory):
+    return comment_factory.create()
