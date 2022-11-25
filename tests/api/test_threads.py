@@ -6,6 +6,8 @@ from core.apps.accounts.models import Account
 
 client = APIClient()
 
+"""CREATE"""
+
 
 @pytest.mark.django_db
 def test_thread_create(api_account, api_community):
@@ -19,6 +21,9 @@ def test_thread_create(api_account, api_community):
     assert data["title"] == data_from_db.title
     assert data["community"] == data_from_db.community.id
     assert data["username"] == data_from_db.username.id
+
+
+"""LIST"""
 
 
 @pytest.mark.django_db
@@ -39,6 +44,9 @@ def test_threads_list_of_community(db, api_thread):
     assert len(response.data) == 1
 
 
+"""RETRIEVE"""
+
+
 @pytest.mark.django_db
 def test_threads_retrieve(api_thread):
     url = reverse("threads_details", kwargs={"pk": "1"})
@@ -55,6 +63,9 @@ def test_threads_retrieve_404():
     assert response.status_code == 404
 
 
+"""UPDATE"""
+
+
 @pytest.mark.django_db
 def test_thread_update_by_owner(api_account, api_community):
     Thread.objects.create(username_id=1, title="example", community_id=1)
@@ -63,6 +74,27 @@ def test_thread_update_by_owner(api_account, api_community):
     response = api_account.put(url, payload)
 
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_thread_update_by_other_user(api_thread, api_account_2):
+    url = reverse("threads_details", kwargs={"pk": "1"})
+    payload = {"title": "test example"}
+    response = api_account_2.put(url, payload)
+
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_thread_update_by_admin(api_admin_account, api_thread):
+    url = reverse("threads_details", kwargs={"pk": "1"})
+    payload = {"title": "test example"}
+    response = api_admin_account.put(url, payload)
+
+    assert response.status_code == 403
+
+
+"""DESTROY"""
 
 
 @pytest.mark.django_db
@@ -75,10 +107,9 @@ def test_thread_destroy_by_owner(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_thread_update_by_admin(api_admin_account, api_thread):
+def test_thread_delete_by_other_user(api_thread, api_account_2):
     url = reverse("threads_details", kwargs={"pk": "1"})
-    payload = {"title": "test example"}
-    response = api_admin_account.put(url, payload)
+    response = api_account_2.delete(url)
 
     assert response.status_code == 403
 

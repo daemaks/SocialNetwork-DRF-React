@@ -30,15 +30,26 @@ def account(db, accounts_factory):
 
 @pytest.fixture
 def admin_account(db, accounts_factory):
-    user = accounts_factory.create(
-        name="admin_user", is_staff=True, is_superuser=True
-    )
+    user = accounts_factory.create(name="admin_user", is_staff=True)
     return user
 
 
 @pytest.fixture
 def api_account(db, accounts_factory, client):
     user = accounts_factory.create()
+    refresh = RefreshToken.for_user(user)
+    client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
+
+    return client
+
+
+@pytest.fixture
+def api_account_2(db, accounts_factory, client):
+    user = accounts_factory.create(
+        username="jestertester",
+        email="jestertester@mail.com",
+        password="jestertester",
+    )
     refresh = RefreshToken.for_user(user)
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
 
