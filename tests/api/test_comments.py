@@ -6,9 +6,7 @@ from core.apps.threads.models import Thread, Comment
 
 
 @pytest.mark.django_db
-def test_comments_list_of_thread(api_account, api_community):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
+def test_comments_list_of_thread(api_account, api_comment):
     url = reverse("comments_of_tread", kwargs={"pk": "1"})
     response = api_account.get(url)
 
@@ -16,9 +14,7 @@ def test_comments_list_of_thread(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_comments_retrieve(api_account, api_community):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
+def test_comments_retrieve(api_account, api_comment):
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_account.get(url)
 
@@ -29,9 +25,7 @@ def test_comments_retrieve(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_comments_update_by_owner(api_account, api_community):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
+def test_comments_update_by_owner(api_account, api_comment):
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_account.put(url, {"text": "testtext"})
 
@@ -40,10 +34,8 @@ def test_comments_update_by_owner(api_account, api_community):
 
 @pytest.mark.django_db
 def test_comments_update_by_other_user(
-    api_account, api_account_2, api_community
+    api_account, api_account_2, api_comment
 ):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_account_2.put(url, {"text": "testtext"})
 
@@ -51,11 +43,7 @@ def test_comments_update_by_other_user(
 
 
 @pytest.mark.django_db
-def test_comments_update_by_admin(
-    api_account, api_admin_account, api_community
-):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
+def test_comments_update_by_admin(api_account, api_admin_account, api_comment):
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_admin_account.put(url, {"text": "testtext"})
 
@@ -66,9 +54,7 @@ def test_comments_update_by_admin(
 
 
 @pytest.mark.django_db
-def test_comments_destroy_by_owner(api_account, api_community):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
+def test_comments_destroy_by_owner(api_account, api_comment):
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_account.delete(url)
 
@@ -77,10 +63,8 @@ def test_comments_destroy_by_owner(api_account, api_community):
 
 @pytest.mark.django_db
 def test_comments_destroy_by_other_user(
-    api_account, api_account_2, api_community
+    api_account, api_account_2, api_comment
 ):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_account_2.delete(url)
 
@@ -89,10 +73,8 @@ def test_comments_destroy_by_other_user(
 
 @pytest.mark.django_db
 def test_comments_destroy_by_admin(
-    api_account, api_admin_account, api_community
+    api_account, api_admin_account, api_comment
 ):
-    Thread.objects.create(username_id=1, title="example", community_id=1)
-    Comment.objects.create(username_id=1, thread_id=1, text="example")
     url = reverse("comment_details", kwargs={"pk": "1"})
     response = api_admin_account.delete(url)
 

@@ -2,6 +2,7 @@ import pytest
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
+from core.apps.threads.models import Thread, Comment
 
 from .factory import (
     AccountsFactory,
@@ -81,5 +82,11 @@ def api_thread(db, threads_factory):
 
 
 @pytest.fixture
-def api_comment(db, comment_factory):
-    return comment_factory.create()
+def api_comment(db, comment_factory, api_community):
+    thread = Thread.objects.create(
+        username_id=1, title="example", community_id=1
+    )
+    comment = Comment.objects.create(
+        username_id=1, thread_id=1, text="example"
+    )
+    return thread, comment
