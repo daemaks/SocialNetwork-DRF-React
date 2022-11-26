@@ -1,20 +1,35 @@
 import pytest
-from rest_framework.test import APIClient
 from django.urls import reverse
-from core.apps.threads.models import Comment
-
-client = APIClient()
-
+from core.apps.threads.models import Thread, Comment
 
 """LIST"""
 
 
 @pytest.mark.django_db
-def test_comments_list_of_thread(api_thread):
+def test_comments_list_of_thread(api_account, api_community):
+    Thread.objects.create(username_id=1, title="example", community_id=1)
+    Comment.objects.create(username_id=1, thread_id=1, text="example")
     url = reverse("comments_of_tread", kwargs={"pk": "1"})
-    response = client.get(url)
+    response = api_account.get(url)
 
     assert response.status_code == 200
 
 
-"""RETRIEVE"""
+@pytest.mark.django_db
+def test_comments_retrieve(api_account, api_community):
+    Thread.objects.create(username_id=1, title="example", community_id=1)
+    Comment.objects.create(username_id=1, thread_id=1, text="example")
+    url = reverse("comment_details", kwargs={"pk": "1"})
+    response = api_account.get(url)
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_comments_update(api_account, api_community):
+    Thread.objects.create(username_id=1, title="example", community_id=1)
+    Comment.objects.create(username_id=1, thread_id=1, text="example")
+    url = reverse("comment_details", kwargs={"pk": "1"})
+    response = api_account.put(url, {"text": "testtext"})
+
+    assert response.status_code == 200

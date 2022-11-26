@@ -1,15 +1,13 @@
 import pytest
 from django.urls import reverse
-from rest_framework.test import APIClient
 from core.apps.accounts.models import Account
 
-client = APIClient()
 
 """CREATE"""
 
 
 @pytest.mark.django_db
-def test_register_user():
+def test_register_user(client):
     payload = {
         "email": "example@mail.com",
         "username": "example",
@@ -22,7 +20,7 @@ def test_register_user():
 
 
 @pytest.mark.django_db
-def test_register_user_fail():
+def test_register_user_fail(client):
     payload = {
         "username": "example",
         "password": "example",
@@ -37,7 +35,7 @@ def test_register_user_fail():
 
 
 @pytest.mark.django_db
-def test_login_user(api_account):
+def test_login_user(api_account, client):
     url = reverse("token_obtain_pair")
 
     response = client.post(
@@ -49,7 +47,7 @@ def test_login_user(api_account):
 
 
 @pytest.mark.django_db
-def test_login_user_fail(api_account):
+def test_login_user_fail(api_account, client):
     url = reverse("token_obtain_pair")
 
     response = client.post(

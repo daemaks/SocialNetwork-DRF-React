@@ -1,9 +1,7 @@
 import pytest
-from rest_framework.test import APIClient
 from django.urls import reverse
 from core.apps.threads.models import Thread
 
-client = APIClient()
 
 """CREATE"""
 
@@ -26,7 +24,7 @@ def test_thread_create(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_threads_list(db, api_thread):
+def test_threads_list(db, api_thread, client):
     url = reverse("treads_list")
     response = client.get(url)
 
@@ -35,7 +33,7 @@ def test_threads_list(db, api_thread):
 
 
 @pytest.mark.django_db
-def test_threads_list_of_community(db, api_thread):
+def test_threads_list_of_community(db, api_thread, client):
     url = reverse("threads_list_of_community", kwargs={"pk": "1"})
     response = client.get(url)
 
@@ -47,7 +45,7 @@ def test_threads_list_of_community(db, api_thread):
 
 
 @pytest.mark.django_db
-def test_threads_retrieve(api_thread):
+def test_threads_retrieve(api_thread, client):
     url = reverse("threads_details", kwargs={"pk": "1"})
     response = client.get(url)
 
@@ -55,7 +53,7 @@ def test_threads_retrieve(api_thread):
 
 
 @pytest.mark.django_db
-def test_threads_retrieve_404():
+def test_threads_retrieve_404(client):
     url = reverse("threads_details", kwargs={"pk": "0"})
     response = client.get(url)
 

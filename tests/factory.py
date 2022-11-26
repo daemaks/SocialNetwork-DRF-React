@@ -12,7 +12,6 @@ fake = Faker()
 class AccountsFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Account
-        django_get_or_create = ("username",)
 
     email = "example@test.com"
     username = "user_test"
