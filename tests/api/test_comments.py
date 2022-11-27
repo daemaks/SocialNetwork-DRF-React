@@ -2,6 +2,22 @@ import pytest
 from django.urls import reverse
 from core.apps.threads.models import Thread, Comment
 
+"""CREATE"""
+
+
+@pytest.mark.django_db
+def test_comment_create(api_account, api_community):
+    Thread.objects.create(username_id=1, title="example", community_id=1)
+    url = reverse("comment_create")
+    response = api_account.post(url, {"text": "test", "thread": 1})
+    data = response.data
+    data_from_db = Comment.objects.all().first()
+
+    assert data["text"] == data_from_db.text
+    assert data["thread"] == data_from_db.thread.id
+    assert data["username"] == data_from_db.username.id
+
+
 """LIST"""
 
 
@@ -11,6 +27,9 @@ def test_comments_list_of_thread(api_account, api_comment):
     response = api_account.get(url)
 
     assert response.status_code == 200
+
+
+"""RETRIEVE"""
 
 
 @pytest.mark.django_db
