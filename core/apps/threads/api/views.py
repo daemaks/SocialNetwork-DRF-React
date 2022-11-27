@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.shortcuts import get_list_or_404
 
 from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
 from tools.permissions import IsOwnerOrReadOnly
@@ -47,7 +48,8 @@ class ThreadsViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return Thread.objects.filter(pk=self.kwargs["pk"])
         elif self.action == "list" and "pk" in self.kwargs:
-            return Thread.objects.filter(community=self.kwargs["pk"])
+            treads = get_list_or_404(Thread, community=self.kwargs["pk"])
+            return treads
         return Thread.objects.all()
 
     def get_serializer_class(self):
@@ -61,7 +63,8 @@ class CommentsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return Comment.objects.filter(thread=self.kwargs["pk"])
+            comments = get_list_or_404(Comment, thread=self.kwargs["pk"])
+            return comments
         return Comment.objects.all()
 
     def get_serializer_class(self):

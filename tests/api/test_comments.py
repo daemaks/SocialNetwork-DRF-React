@@ -29,6 +29,14 @@ def test_comments_list_of_thread(api_account, api_comment):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
+def test_comments_list_of_thread_404(api_account):
+    url = reverse("comments_of_tread", kwargs={"pk": "0"})
+    response = api_account.get(url)
+
+    assert response.status_code == 404
+
+
 """RETRIEVE"""
 
 

@@ -41,6 +41,14 @@ def test_threads_list_of_community(db, api_thread, client):
     assert len(response.data) == 1
 
 
+@pytest.mark.django_db
+def test_threads_list_of_community_404(db, client):
+    url = reverse("threads_list_of_community", kwargs={"pk": "0"})
+    response = client.get(url)
+
+    assert response.status_code == 404
+
+
 """RETRIEVE"""
 
 
