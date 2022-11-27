@@ -9,14 +9,12 @@ from .factory import (
     TagFactory,
     CommunityFactory,
     ThreadsFactory,
-    CommentFactory,
 )
 
 register(AccountsFactory)
 register(TagFactory)
 register(CommunityFactory)
 register(ThreadsFactory)
-register(CommentFactory)
 
 
 @pytest.fixture
@@ -82,7 +80,7 @@ def api_thread(db, threads_factory):
 
 
 @pytest.fixture
-def api_comment(db, comment_factory, api_community):
+def api_comment(db, api_community):
     thread = Thread.objects.create(
         username_id=1, title="example", community_id=1
     )

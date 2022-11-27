@@ -45,7 +45,7 @@ def test_threads_list_of_community(db, api_thread, client):
 
 
 @pytest.mark.django_db
-def test_threads_retrieve(api_thread, client):
+def test_threads_retrieve(client, api_thread):
     url = reverse("threads_details", kwargs={"pk": "1"})
     response = client.get(url)
 
@@ -74,7 +74,7 @@ def test_thread_update_by_owner(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_thread_update_by_other_user(api_thread, api_account_2):
+def test_thread_update_by_other_user(api_account_2, api_thread):
     url = reverse("threads_details", kwargs={"pk": "1"})
     payload = {"title": "test example"}
     response = api_account_2.put(url, payload)
@@ -104,7 +104,7 @@ def test_thread_destroy_by_owner(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_thread_delete_by_other_user(api_thread, api_account_2):
+def test_thread_delete_by_other_user(api_account_2, api_thread):
     url = reverse("threads_details", kwargs={"pk": "1"})
     response = api_account_2.delete(url)
 

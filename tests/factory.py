@@ -1,5 +1,5 @@
 from core.apps.accounts.models import Account
-from core.apps.threads.models import Tag, Community, Thread, Comment
+from core.apps.threads.models import Tag, Community, Thread
 
 from faker import Faker
 import factory
@@ -52,12 +52,3 @@ class ThreadsFactory(factory.django.DjangoModelFactory):
     username = factory.SubFactory(AccountsFactory)
     community = factory.SubFactory(CommunityFactory)
     content = fake.text()
-
-
-class CommentFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = Comment
-
-    username = factory.SubFactory(AccountsFactory)
-    thread = factory.SubFactory(ThreadsFactory)
-    text = fake.text()
