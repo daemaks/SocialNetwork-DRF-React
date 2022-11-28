@@ -7,9 +7,12 @@ from core.apps.threads.models import Thread, Comment
 
 @pytest.mark.django_db
 def test_comment_create(api_account, api_community):
+
+    """test_comment_create"""
     Thread.objects.create(username_id=1, title="example", community_id=1)
-    url = reverse("comment_create")
-    response = api_account.post(url, {"text": "test", "thread": 1})
+    response = api_account.post(
+        reverse("comment_create"), {"text": "test", "thread": 1}
+    )
     data = response.data
     data_from_db = Comment.objects.all().first()
 
@@ -17,33 +20,22 @@ def test_comment_create(api_account, api_community):
     assert data["thread"] == data_from_db.thread.id
     assert data["username"] == data_from_db.username.id
 
-
-"""LIST"""
-
-
-@pytest.mark.django_db
-def test_comments_list_of_thread(api_account, api_comment):
-    url = reverse("comments_of_tread", kwargs={"pk": "1"})
-    response = api_account.get(url)
+    """test_comments_list_of_thread"""
+    response = api_account.get(
+        reverse("comments_of_tread", kwargs={"pk": "1"})
+    )
 
     assert response.status_code == 200
 
-
-@pytest.mark.django_db
-def test_comments_list_of_thread_404(api_account):
-    url = reverse("comments_of_tread", kwargs={"pk": "0"})
-    response = api_account.get(url)
+    """test_comments_list_of_thread_404"""
+    response = api_account.get(
+        reverse("comments_of_tread", kwargs={"pk": "0"})
+    )
 
     assert response.status_code == 404
 
-
-"""RETRIEVE"""
-
-
-@pytest.mark.django_db
-def test_comments_retrieve(api_account, api_comment):
-    url = reverse("comment_details", kwargs={"pk": "1"})
-    response = api_account.get(url)
+    """test_comments_retrieve"""
+    response = api_account.get(reverse("comment_details", kwargs={"pk": "1"}))
 
     assert response.status_code == 200
 

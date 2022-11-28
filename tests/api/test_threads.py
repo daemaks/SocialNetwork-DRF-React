@@ -3,14 +3,13 @@ from django.urls import reverse
 from core.apps.threads.models import Thread, Likes
 
 
-"""CREATE"""
-
-
 @pytest.mark.django_db
-def test_thread_create(api_account, api_community):
-    url = reverse("threads_create")
-    payload = {"title": "example", "community": 1}
-    response = api_account.post(url, payload)
+def test_thread_create_and_safe_requests(api_account, api_community, client):
+
+    """test_thread_create"""
+    response = api_account.post(
+        reverse("threads_create"), {"title": "example", "community": 1}
+    )
     data = response.data
     data_from_db = Thread.objects.all().first()
 
@@ -19,51 +18,32 @@ def test_thread_create(api_account, api_community):
     assert data["community"] == data_from_db.community.id
     assert data["username"] == data_from_db.username.id
 
-
-"""LIST"""
-
-
-@pytest.mark.django_db
-def test_threads_list(api_thread, client):
-    url = reverse("treads_list")
-    response = client.get(url)
+    """test_threads_list"""
+    response = client.get(reverse("treads_list"))
 
     assert response.status_code == 200
-    assert len(response.data) == 1
 
-
-@pytest.mark.django_db
-def test_threads_list_of_community(api_thread, client):
-    url = reverse("threads_list_of_community", kwargs={"pk": "1"})
-    response = client.get(url)
+    """test_threads_list_of_community"""
+    response = client.get(
+        reverse("threads_list_of_community", kwargs={"pk": "1"})
+    )
 
     assert response.status_code == 200
-    assert len(response.data) == 1
 
-
-@pytest.mark.django_db
-def test_threads_list_of_community_404(client):
-    url = reverse("threads_list_of_community", kwargs={"pk": "0"})
-    response = client.get(url)
+    """test_threads_list_of_community_404"""
+    response = client.get(
+        reverse("threads_list_of_community", kwargs={"pk": "0"})
+    )
 
     assert response.status_code == 404
 
-
-"""RETRIEVE"""
-
-
-@pytest.mark.django_db
-def test_threads_retrieve(client, api_thread):
-    url = reverse("threads_details", kwargs={"pk": "1"})
-    response = client.get(url)
+    """test_threads_retrieve"""
+    response = client.get(reverse("threads_details", kwargs={"pk": "1"}))
 
     assert response.status_code == 200
 
-
-@pytest.mark.django_db
-def test_threads_retrieve_404(client):
-    url = reverse("threads_details", kwargs={"pk": "0"})
-    response = client.get(url)
+    """test_threads_retrieve_404"""
+    response = client.get(reverse("threads_details", kwargs={"pk": "0"}))
 
     assert response.status_code == 404
 
@@ -125,6 +105,9 @@ def test_thread_destroy_by_admin(api_admin_account, api_thread):
     response = api_admin_account.delete(url)
 
     assert response.status_code == 204
+
+
+"""LIKE"""
 
 
 @pytest.mark.django_db
