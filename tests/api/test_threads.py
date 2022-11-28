@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from core.apps.threads.models import Thread
+from core.apps.threads.models import Thread, Likes
 
 
 """CREATE"""
@@ -24,7 +24,7 @@ def test_thread_create(api_account, api_community):
 
 
 @pytest.mark.django_db
-def test_threads_list(db, api_thread, client):
+def test_threads_list(api_thread, client):
     url = reverse("treads_list")
     response = client.get(url)
 
@@ -33,7 +33,7 @@ def test_threads_list(db, api_thread, client):
 
 
 @pytest.mark.django_db
-def test_threads_list_of_community(db, api_thread, client):
+def test_threads_list_of_community(api_thread, client):
     url = reverse("threads_list_of_community", kwargs={"pk": "1"})
     response = client.get(url)
 
@@ -42,7 +42,7 @@ def test_threads_list_of_community(db, api_thread, client):
 
 
 @pytest.mark.django_db
-def test_threads_list_of_community_404(db, client):
+def test_threads_list_of_community_404(client):
     url = reverse("threads_list_of_community", kwargs={"pk": "0"})
     response = client.get(url)
 
@@ -125,3 +125,20 @@ def test_thread_destroy_by_admin(api_admin_account, api_thread):
     response = api_admin_account.delete(url)
 
     assert response.status_code == 204
+
+
+@pytest.mark.django_db
+def test_thread_likes_count(client, api_thread):
+    url = reverse("likes", kwargs={"pk": "1"})
+    response = client.get(url)
+
+    assert response.status_code == 200
+
+
+def test_thread_post_like(api_account, api_community):
+    Thread.objects.create(username_id=1, title="example", community_id=1)
+    url = reverse("likes", kwargs={"pk": "1"})
+    api_account.post(url)
+    assert Likes.objects.filter(thread=1).count() == 1
+    api_account.post(url)
+    assert Likes.objects.filter(thread=1).count() == 0
