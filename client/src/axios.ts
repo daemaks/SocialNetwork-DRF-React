@@ -11,3 +11,5 @@ const axiosInstance = axios.create({
             : null,
     },
 });
+
+export default axiosInstance;
