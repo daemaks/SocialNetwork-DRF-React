@@ -3,8 +3,8 @@ import {Routes, Route} from 'react-router-dom'
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import MainPage from './pages/MainPage';
-import LoginPage from './pages/LoginPage';
 import SignUp from './components/register';
+import SignIn from './components/login';
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<MainPage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/login' element={<SignIn/>}/>
         <Route path='/register' element={<SignUp/>}/>
       </Routes>
       <Footer/>
