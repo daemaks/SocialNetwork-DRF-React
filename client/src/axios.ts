@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
         Authorization: localStorage.getItem('access_token')
             ? 'Bearer ' + localStorage.getItem('access_token')
             : null,
+        accept: 'application/json',
     },
 });
 
