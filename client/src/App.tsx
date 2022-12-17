@@ -1,7 +1,7 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom'
-import {Header} from './components/Header';
-import {Footer} from './components/Footer';
+import {Header} from './layouts/Header';
+import {Footer} from './layouts/Footer';
 import TreadsList from './pages/MainPage';
 import SignUp from './components/register';
 import SignIn from './components/login';

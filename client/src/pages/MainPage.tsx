@@ -1,5 +1,6 @@
 import { useThreads } from "../hooks/threadsLoader"
 import Loader from "../components/loader"
+import { Thread } from "../components/thread"
 
 export default function TreadsList() {
 
@@ -8,7 +9,7 @@ export default function TreadsList() {
     return (
         <div>
         { loading && <Loader /> }
-        { threads.map(thread => <thread thread={ thread } key={ thread.id } />)}
+        { threads.map(thread => <Thread thread={ thread } key={ thread.id } />)}
         </div>
     )
 }
