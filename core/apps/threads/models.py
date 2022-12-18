@@ -1,16 +1,10 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.accounts.models import Account
 
-
-def validate_image(fieldfile_obj):
-    filesize = fieldfile_obj.file.size
-    megabyte_limit = 2.0
-    if filesize > megabyte_limit * 1024 * 1024:
-        raise ValidationError(f"Max file size is {str(megabyte_limit)}MB")
+from tools.validators import validate_image
 
 
 class Tag(models.Model):
@@ -42,12 +36,12 @@ class Community(models.Model):
     )
     description = models.CharField(
         _("Description"),
-        help_text=_("Not requiered. Max Length - 200"),
-        max_length=200,
+        help_text=_("Not requiered. Max Length - 100"),
+        max_length=100,
         blank=True,
         null=True,
     )
-    com_pic = models.ImageField(
+    image = models.ImageField(
         _("Community picture"),
         upload_to="community_picture/",
         blank=True,
@@ -97,12 +91,12 @@ class Thread(models.Model):
     )
     content = models.TextField(
         _("Content"),
-        help_text=_("Not requiered. Max length - 500"),
-        max_length=500,
+        help_text=_("Not requiered. Max length - 200"),
+        max_length=200,
         blank=True,
         null=True,
     )
-    profile_pic = models.ImageField(
+    image = models.ImageField(
         _("Thread picture"),
         upload_to="thread_picture/",
         blank=True,
@@ -137,8 +131,8 @@ class Comment(models.Model):
     )
     text = models.TextField(
         _("Text"),
-        help_text=_("Requiered. Max length - 300"),
-        max_length=300,
+        help_text=_("Requiered. Max length - 150"),
+        max_length=150,
         blank=False,
         null=False,
         unique=False,

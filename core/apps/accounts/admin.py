@@ -16,7 +16,7 @@ class UserAdminConfig(UserAdmin):
     list_display = (
         "email",
         "username",
-        "profile_pic",
+        "avatar",
         "is_active",
         "is_staff",
     )
@@ -27,7 +27,7 @@ class UserAdminConfig(UserAdmin):
                 "fields": (
                     "email",
                     "username",
-                    "profile_pic",
+                    "avatar",
                 )
             },
         ),
