@@ -5,8 +5,8 @@ export interface IThread {
     title: string
     content?: string
     image?: string
-    create_at: string
-    update_at: string
+    created_at: Date
+    updated_at: Date
 }
 
 export interface ICommunity {

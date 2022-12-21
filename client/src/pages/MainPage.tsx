@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useThreads } from "../hooks/threadsLoader"
 import { useCommunities } from "../hooks/communitiesLoader"
 import Loader from "../components/loader"
@@ -10,14 +11,23 @@ export default function TreadsList() {
     const {communities} = useCommunities()
 
     return (
-        <div>
-            <div>
-            { loading && <Loader /> }
-            { threads.map(thread => <Thread thread={ thread } key={ thread.id } />)}
+        <div className="flex w-full" >
+            <div className="fixed w-80 bg-white h-full">
+                <Link to="/">Home</Link>
             </div>
-            <div>
+            <div className="flex w-full ml-80">
+                <div className="flex w-full pt-8">
+                    <div className="w-3/5">
+                        { loading && <Loader /> }
+                        { threads.map(thread => <Thread thread={ thread } key={ thread.id } />)}
+                    </div>
+                    <div className="w-2/5 h-full">
+                    </div>
+                </div>
+            </div>
+            {/* <div>
             { communities.map(community => <Community community={ community } key={ community.id } />)}
-            </div>
+            </div> */}
         </div>
 
 
