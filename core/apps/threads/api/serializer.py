@@ -17,7 +17,6 @@ class TagDetailsSerializer(serializers.ModelSerializer):
 
 class CommunitySerializer(serializers.ModelSerializer):
     tag = serializers.StringRelatedField(read_only=True)
-    members = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = Community

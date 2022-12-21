@@ -5,10 +5,10 @@ interface ThreadProps {
     thread:IThread
 }
 
-export function Thread(props:ThreadProps) {
+export function Thread({ thread }:ThreadProps) {
     return (
         <div>
-            {props.thread.title}
+            {thread.title}
         </div>
     )
 }

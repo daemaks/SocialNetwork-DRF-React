@@ -52,8 +52,8 @@ class Community(models.Model):
     tag = models.ForeignKey(
         Tag,
         on_delete=models.PROTECT,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
     members = models.ManyToManyField(
         Account,
