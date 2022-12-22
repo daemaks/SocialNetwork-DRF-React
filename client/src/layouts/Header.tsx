@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 export function Header() {
     return (
-        <div className='flex items-center bg-neutral-400 h-12 w-full px-5'>
+        <div className='fixed flex items-center bg-neutral-400 h-12 w-full px-5'>
             <div className='mr-96'>
                 <Link to="/">Home</Link>
             </div>

@@ -12,10 +12,10 @@ export default function TreadsList() {
 
     return (
         <div className="flex w-full" >
-            <div className="fixed w-80 bg-white h-full">
+            <div className="fixed top-12 w-80 bg-white h-full">
                 <Link to="/">Home</Link>
             </div>
-            <div className="flex w-full ml-80">
+            <div className="flex w-full mt-12 ml-80">
                 <div className="flex w-full pt-8">
                     <div className="w-3/5">
                         { loading && <Loader /> }
