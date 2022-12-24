@@ -5,3 +5,7 @@
 body {
     background-color: rgb(226 232 240);
 }
+
+.community-image {
+    clip-path: circle();
+}

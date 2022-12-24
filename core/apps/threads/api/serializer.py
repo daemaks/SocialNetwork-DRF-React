@@ -25,12 +25,14 @@ class CommunitySerializer(serializers.ModelSerializer):
 
 class ThreadSerializer(serializers.ModelSerializer):
     username = serializers.StringRelatedField(read_only=True)
-    community = serializers.StringRelatedField(read_only=True)
+    # community = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Thread
         fields = "__all__"
         read_only_fields = ["community"]
+
+        depth = 1
 
 
 class CreateThreadSerializer(serializers.ModelSerializer):

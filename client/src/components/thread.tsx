@@ -24,8 +24,9 @@ export function Thread({ thread }:ThreadProps) {
         <div className='border border-gray-300 flex bg-white rounded mb-6 ml-72 w-4/6'>
             <div className='bg-slate-100 w-9 rounded-l'></div>
             <div className='block px-1.5 w-full '>
-                <div className='flex h-4 text-xs'>
-                    <span className='mr-0.5 font-bold'>c/{thread.community} </span>
+                <div className='flex mt-1.5 h-4 text-xs'>
+                    <img className='community-image' src={thread.community.image}/>
+                    <span className='mr-0.5 font-bold'>c/{thread.community.title} </span>
                     <span className='text-slate-500'> • Posted by u/{thread.username} {getTime(thread)} ago</span>
                 </div>
                 <div className='pt-1'>
