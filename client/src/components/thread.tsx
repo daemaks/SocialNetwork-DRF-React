@@ -1,5 +1,6 @@
 import React from 'react'
 import { IThread } from '../model'
+import { BiLike, BiComment } from 'react-icons/bi'
 
 interface ThreadProps {
     thread:IThread
@@ -36,9 +37,19 @@ export function Thread({ thread }:ThreadProps) {
                 <div className='pt-1'>
                     <p className='antialiased text-sm'>{thread.content}</p>
                 </div>
-                <div className='mt-0.5'>
-                    <span>Likes</span>
-                    <span>Comments</span>
+                <div className='flex my-1 font-medium text-sm text-slate-500'>
+                    <div className='mr-5'>
+                        <a href="#" className='flex items-center'>
+                        <BiLike size='1.3rem'/>
+                        <span className='ml-1'>Likes</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#" className='flex items-center'>
+                        <BiComment size='1.3rem'/>
+                        <span className='ml-1'>Comments</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
