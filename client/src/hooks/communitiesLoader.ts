@@ -17,3 +17,19 @@ export function useCommunities() {
 
     return { communities }
 }
+
+export function useTagCommunities(id:number) {
+    const [communities, setCommunities] = useState<ICommunity[]>([])
+    
+    async function fetchCommunities() {
+        const response = await axiosInstance.get<ICommunity[]>(`threads/tag/${id}`)
+        setCommunities(response.data)
+
+    }
+
+    useEffect(() => {
+        fetchCommunities()
+    }, [])
+
+    return { communities }
+}

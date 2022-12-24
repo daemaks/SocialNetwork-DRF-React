@@ -9,10 +9,10 @@ class TagSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class TagDetailsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Community
-        fields = ["id", "title"]
+# class TagDetailsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Community
+#         fields = "__all__"
 
 
 class CommunitySerializer(serializers.ModelSerializer):

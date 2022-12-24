@@ -10,7 +10,7 @@ from tools.permissions import IsOwnerOrReadOnly
 from .serializer import (
     CommentSerializer,
     CommunitySerializer,
-    TagDetailsSerializer,
+    # TagDetailsSerializer,
     TagSerializer,
     ThreadSerializer,
     CreateThreadSerializer,
@@ -20,18 +20,25 @@ from .serializer import (
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    serializer_class = TagSerializer
+    queryset = Tag.objects.all()
 
-    def get_queryset(self):
-        if self.action == "list":
-            return Tag.objects.all()
-        elif self.action == "retrieve":
-            return Community.objects.filter(tag=self.kwargs["pk"])
+    def retrieve(self, request, pk):
+        communities = get_list_or_404(Community, tag=pk)
+        serializer = CommunitySerializer(communities, many=True)
+        return Response(serializer.data)
 
-    def get_serializer_class(self):
-        if self.action == "list":
-            return TagSerializer
-        elif self.action == "retrieve":
-            return TagDetailsSerializer
+    # def get_queryset(self):
+    #     if self.action == "list":
+    #         return Tag.objects.all()
+    #     elif self.action == "retrieve":
+    #         return Community.objects.filter(tag=self.kwargs["pk"])
+
+    # def get_serializer_class(self):
+    #     if self.action == "list":
+    #         return TagSerializer
+    #     elif self.action == "retrieve":
+    #         return TagDetailsSerializer
 
 
 class CommunityListView(viewsets.ReadOnlyModelViewSet):

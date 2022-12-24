@@ -17,3 +17,8 @@ export interface IThread {
     created_at: Date
     updated_at: Date
 }
+
+export interface ITag {
+    id: number
+    title: string
+}
