@@ -34,17 +34,17 @@ export function useTagCommunities(id:number) {
     return { communities }
 }
 
-export function useCommunity(id:any) {
-    const [community, setCommunity] = useState<ICommunity[]>([])
+export function useCommunity(id:string) {
+    const [community, setCommunity] = useState<ICommunity>()
 
-    async function fetchCommunities() {
-        const response = await axiosInstance.get<ICommunity[]>(`threads/community/${id}`)
+    async function fetchCommunity() {
+        const response = await axiosInstance.get<ICommunity>(`threads/community/${id}`)
         setCommunity(response.data)
 
     }
 
     useEffect(() => {
-        fetchCommunities()
+        fetchCommunity()
     }, [])
 
     return { community }

@@ -6,7 +6,7 @@ import Loader from "../components/loader"
 export default function TreadsList() {
 
     const {loading, threads} = useThreads()
-
+    console.log(threads)
     return (
             <div className="flex w-full mt-12 ml-80">
                 <div className="flex w-full pt-8">
