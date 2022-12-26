@@ -8,7 +8,6 @@ interface TagProp {
 
 export function Tag({tag}:TagProp) {
     const {communities} = useTagCommunities(tag.id)
-    console.log(communities)
 
     return (
         <div>
