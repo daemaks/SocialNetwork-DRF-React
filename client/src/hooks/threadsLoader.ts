@@ -20,3 +20,21 @@ export function useThreads() {
 
     return { threads, loading }
 }
+
+export function useCommunityThreads(id:any) {
+    const [threads, setThreads] = useState<IThread[]>([])
+    const [loading, setLoading] = useState(false)
+
+    async function fetchCommunityThreads() {
+        setLoading(true)
+        const response = await axiosInstance.get<IThread[]>(`threads/community/${id}/threads`)
+        setThreads(response.data)
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        fetchCommunityThreads()
+    }, [])
+
+    return { threads, loading }
+}

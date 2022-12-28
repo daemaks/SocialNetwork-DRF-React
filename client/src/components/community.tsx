@@ -7,7 +7,7 @@ interface CommunityProp {
 
 export function Community({ community }:CommunityProp) {
     return (
-        <div className='w-full'>
+        <div className='w-full mb-4'>
             <div className='h-36 bg-cover w-full' style={{ backgroundImage: "url(https://www.wallpapers.net/data-programming-codes-hd-wallpaper/download/3840x2160.jpg)" }}>
             </div>
             <div className='bg-white'>
