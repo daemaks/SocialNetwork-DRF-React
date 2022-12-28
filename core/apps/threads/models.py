@@ -38,14 +38,14 @@ class Community(models.Model):
         _("Description"),
         help_text=_("Not requiered. Max Length - 100"),
         max_length=100,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
     image = models.ImageField(
         _("Community picture"),
         upload_to="community_picture/",
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         validators=[validate_image, validate_image_file_extension],
         help_text=("Not required. Maximum file size allowed is 2Mb"),
     )

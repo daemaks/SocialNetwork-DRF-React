@@ -3,10 +3,13 @@ import { useCommunity } from "../hooks/communitiesLoader";
 import { Community } from "../components/community";
 import { ICommunity } from "../model";
 
+
 export default function CommunityDetails() {
 
     const { id } = useParams()
     const { community } = useCommunity(id as string)
+    
+
     return (
         <div className="flex w-full mt-12 ml-80">
             <Community community={community as ICommunity} key={community?.id} />

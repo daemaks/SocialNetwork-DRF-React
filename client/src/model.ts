@@ -2,8 +2,8 @@ export interface ICommunity {
     id: number
     tag: string
     title: string
-    description?: string
-    image?: string
+    description: string
+    image: string
     members: number[]
 }
 

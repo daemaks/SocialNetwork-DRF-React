@@ -12,7 +12,6 @@ export function useThreads() {
         const response = await axiosInstance.get<IThread[]>('threads/')
         setThreads(response.data)
         setLoading(false)
-
     }
 
     useEffect(() => {

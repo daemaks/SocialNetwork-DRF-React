@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import axiosInstance from '../axios'
 import { ICommunity } from '../model'
 
@@ -8,7 +8,6 @@ export function useCommunities() {
     async function fetchCommunities() {
         const response = await axiosInstance.get<ICommunity[]>('threads/community/')
         setCommunities(response.data)
-
     }
 
     useEffect(() => {
@@ -18,13 +17,12 @@ export function useCommunities() {
     return { communities }
 }
 
-export function useTagCommunities(id:number) {
+export function useTagCommunities(id:any) {
     const [communities, setCommunities] = useState<ICommunity[]>([])
     
     async function fetchCommunities() {
         const response = await axiosInstance.get<ICommunity[]>(`threads/tag/${id}`)
         setCommunities(response.data)
-
     }
 
     useEffect(() => {
@@ -34,18 +32,18 @@ export function useTagCommunities(id:number) {
     return { communities }
 }
 
-export function useCommunity(id:string) {
-    const [community, setCommunity] = useState<ICommunity>()
+export function useCommunity(id:any) {
+    const [community, setCommunity] = useState<ICommunity | null>(null)
 
-    async function fetchCommunity() {
-        const response = await axiosInstance.get<ICommunity>(`threads/community/${id}`)
-        setCommunity(response.data)
-
-    }
-
+    
     useEffect(() => {
         fetchCommunity()
     }, [])
+    
+    async function fetchCommunity() {
+        const response = await axiosInstance.get<ICommunity>(`threads/community/${id}`)
+        setCommunity(response.data)
+    }
 
     return { community }
 }
