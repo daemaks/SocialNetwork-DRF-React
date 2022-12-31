@@ -8,3 +8,8 @@ body {
     background-color: rgb(226 232 240);
     font-family: 'Noto Sans', sans-serif;
 }
+
+.menu-open {
+    display: block;
+    opacity: 1;
+}

@@ -63,7 +63,6 @@ export function CommunityThread({ thread }:ThreadProps) {
                 <div className='bg-slate-100 w-9 rounded-l'></div>
                 <div className='block px-1.5 w-full '>
                     <div className='flex mt-1.5 h-4 text-xs'>
-
                         <span className='text-slate-500'>Posted by u/{thread.username} {getTime(thread)} ago</span>
                     </div>
                     <div className='pt-1'>
