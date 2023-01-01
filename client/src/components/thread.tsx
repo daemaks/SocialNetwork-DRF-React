@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { IThread } from '../model'
 import { BiLike, BiComment } from 'react-icons/bi'
+import { Modal } from './modal'
 
 interface ThreadProps {
     thread:IThread
@@ -53,6 +54,7 @@ export function Thread({ thread }:ThreadProps) {
                     </div>
                 </div>
             </div>
+            {/* <Modal/> */}
         </div>
     )
 }

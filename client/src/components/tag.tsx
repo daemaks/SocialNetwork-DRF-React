@@ -40,7 +40,7 @@ export function Tag({tag}:TagProp) {
             <ul className='menu p-1 absolute left-[50%] w-full opacity-0 none translate-x-[-50%] duration-200 z-[1]'>
             { communities.map(community => {
                 return (
-                    <li className='p-1 hover:bg-slate-100'>
+                    <li key={community.id} className='p-1 hover:bg-slate-100'>
                         <Link to={`/c/${community.id}`} className='capitalize'>{community.title}</Link>
                     </li>
                 )

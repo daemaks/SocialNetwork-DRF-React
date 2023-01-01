@@ -1,6 +1,6 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom'
-import {Header} from './layouts/Header';
+import Header from './layouts/Header';
 import {Footer} from './layouts/Footer';
 import { Sidebar } from './layouts/Sidebar';
 import TreadsList from './pages/ThreadsPage';

@@ -36,10 +36,28 @@ export default function SignIn() {
     };
 
     return (
-        <form>
-            <input onChange={handleChange} type="text" name='email' placeholder='Enter Email'/>
-            <input onChange={handleChange} type="password" name='password' placeholder='Enter Password'/>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-        </form>
+        <div>
+            <form>
+                <div className="flex flex-col flex-nowrap text-sm">
+                    <input 
+                        className="mx-auto mt-4 bg-gray-200 outline-none rounded-full py-2 px-4"
+                        onChange={handleChange} 
+                        type="text" 
+                        name='email' 
+                        placeholder='Enter Email'/>
+
+                    <input 
+                        className="mx-auto mt-4 bg-gray-200 outline-none rounded-full py-2 px-4"
+                        onChange={handleChange} 
+                        type="password" 
+                        name='password' 
+                        placeholder='Enter Password'/>
+                    <button 
+                        className="mt-4 bg-zinc-600 rounded-full py-2 px-4 mx-auto w-1/2"
+                        type="submit" 
+                        onClick={handleSubmit}>Submit</button>
+                </div>
+            </form>
+        </div>
     )
 }
