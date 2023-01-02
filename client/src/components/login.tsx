@@ -2,7 +2,11 @@ import React, {useState} from "react";
 import axiosInstance from '../axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignIn() {
+interface SignInProps {
+    signIn: () => void
+}
+
+export default function SignIn({signIn}: SignInProps) {
     const navigate = useNavigate();
     const initialFormData = Object.freeze({
         email: '',
@@ -30,8 +34,8 @@ export default function SignIn() {
             localStorage.setItem('refresh_token', res.data.refresh);
             axiosInstance.defaults.headers['Authorization'] =
                 'Bearer ' + localStorage.getItem('access_token');
+            signIn()
             navigate('/')
-            console.log(res.data)
         });
     };
 
