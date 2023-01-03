@@ -4,7 +4,6 @@ import {Footer} from './layouts/Footer';
 import { Sidebar } from './layouts/Sidebar';
 import TreadsList from './pages/ThreadsPage';
 import CommunityDetails from './pages/CommunityPage';
-import SignUp from './components/register';
 import LogOut from './components/logout';
 
 export default function App() {
@@ -16,7 +15,6 @@ export default function App() {
             <Route path="/" element={<TreadsList/>}/>
             <Route path='/c/:id' element={<CommunityDetails/>} />
             <Route path='/logout' element={<LogOut/>}/>
-            <Route path='/register' element={<SignUp/>}/>
           </Routes>
         <Footer/>
       </div>

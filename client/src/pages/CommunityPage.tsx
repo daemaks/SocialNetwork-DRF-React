@@ -15,7 +15,8 @@ export default function CommunityDetails() {
     const {loading, threads} = useCommunityThreads(id)
 
     const getCreatedTime = (community : ICommunity | null) => {
-        // return new Date(community.created).toLocaleDateString()
+        // add create field in the Community model
+        // return new Date(community.created).toDateString()
         return new Date(2022, 7, 12).toDateString()
       }
     

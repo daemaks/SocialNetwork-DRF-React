@@ -41,6 +41,9 @@ export default function SignIn({signIn}: SignInProps) {
 
     return (
         <div>
+            <h1 className='text-2xl text-center mb-2'>
+                Sign In
+            </h1>
             <form>
                 <div className="flex flex-col flex-nowrap text-sm">
                     <input 
