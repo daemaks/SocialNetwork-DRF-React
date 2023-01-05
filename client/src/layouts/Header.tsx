@@ -2,10 +2,12 @@ import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { Modal } from '../components/modal'
 import { InOrUp } from '../components/loginOrRegister'
+import { IUser } from '../model'
 
 export function Header() {
     const [modal, setModal] = useState(false)
     const [value, setValue] = useState(true)
+    const user = JSON.parse(localStorage.getItem('user') as string) as IUser
     return (
         <div className='fixed flex items-center bg-neutral-400 h-12 w-full px-5'>
                 <div className='mr-96'>
@@ -35,12 +37,13 @@ export function Header() {
                     </button>
                     </div>
                 </Modal>}
-                <button onClick={() => setModal(true)}>
+                {user ? (
+                    <Link to="/logout">Logout</Link>
+                ) : (
+                    <button onClick={() => setModal(true)}>
                     Get Started
-                </button>
-                <span> | </span>
-                <Link to="/logout">Logout</Link>
-                <span> | </span>
+                    </button>
+                )}
             </div>
     )
 }

@@ -25,7 +25,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         serialized_user = AccountSerializer(self.user).data
 
         # Add extra responses
-        data["user_id"] = serialized_user
+        data["user"] = serialized_user
         return data
 
 

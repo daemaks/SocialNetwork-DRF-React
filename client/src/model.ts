@@ -22,3 +22,12 @@ export interface ITag {
     id: number
     title: string
 }
+
+export interface IUser {
+    id: number;
+    username: string;
+    avatar?: string;
+    about: string;
+    date_joined: Date;
+    is_staff: boolean;
+}
