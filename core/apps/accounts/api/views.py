@@ -4,9 +4,14 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 from tools.permissions import IsOwnerOrReadOnly
 
-from .serializer import AccountSerializer, RegisterSerializer
+from .serializer import (
+    AccountSerializer,
+    RegisterSerializer,
+    CustomTokenObtainPairSerializer,
+)
 
 
 # Register
@@ -20,6 +25,11 @@ class CustomCreateAccountView(APIView):
             if created_user:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# Auth
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 
 # Logout

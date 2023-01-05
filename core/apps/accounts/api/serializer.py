@@ -1,5 +1,6 @@
 from core.apps.accounts.models import Account
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -17,13 +18,24 @@ class RegisterSerializer(serializers.ModelSerializer):
         return instance
 
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        serialized_user = AccountSerializer(self.user).data
+
+        # Add extra responses
+        data["user_id"] = serialized_user
+        return data
+
+
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = (
             "id",
             "username",
-            "profile_pic",
+            "avatar",
             "about",
             "date_joined",
             "is_staff",
