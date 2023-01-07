@@ -1,13 +1,17 @@
-import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Modal } from '../components/modal'
 import { InOrUp } from '../components/loginOrRegister'
-import { IUser } from '../model'
+import { useAuth } from '../context/AuthContext'
 
 export function Header() {
     const [modal, setModal] = useState(false)
     const [value, setValue] = useState(true)
-    const user = JSON.parse(localStorage.getItem('user') as string) as IUser
+    const context = useAuth()
+        if ( ! context ) {
+            return null;
+        }
+        const { user, setUser } = context;
     return (
         <div className='fixed flex items-center bg-neutral-400 h-12 w-full px-5'>
                 <div className='mr-96'>
@@ -21,6 +25,7 @@ export function Header() {
                             className='w-9/12 px-3 py-2 rounded-3xl' />
                     </label>
                 </div>
+                {user?.username}
                 {modal && <Modal onClose={() => setModal(false)}>
                     <div className='flex flex-col justify-center'>
                     <InOrUp 

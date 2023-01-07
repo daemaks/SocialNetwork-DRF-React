@@ -5,18 +5,29 @@ import { Sidebar } from './layouts/Sidebar';
 import TreadsList from './pages/ThreadsPage';
 import CommunityDetails from './pages/CommunityPage';
 import LogOut from './components/logout';
+import { useEffect, useState } from 'react';
+import { IUser } from './model';
+import { AuthContext } from './context/AuthContext';
 
 export default function App() {
+  const [user, setUser] = useState<IUser | null>(null)
+  useEffect(() => {
+    const data = localStorage.getItem('user' as string)
+    if (data !== null ) setUser(JSON.parse(data) as IUser)
+  }, [])
+
   return (
       <div className="App">
-        <Header/>
-        <Sidebar/>
-          <Routes>
-            <Route path="/" element={<TreadsList/>}/>
-            <Route path='/c/:id' element={<CommunityDetails/>} />
-            <Route path='/logout' element={<LogOut/>}/>
-          </Routes>
-        <Footer/>
+        <AuthContext.Provider value={{user, setUser}}>
+          <Header/>
+          <Sidebar/>
+            <Routes>
+              <Route path="/" element={<TreadsList/>}/>
+              <Route path='/c/:id' element={<CommunityDetails/>} />
+              <Route path='/logout' element={<LogOut/>}/>
+            </Routes>
+          <Footer/>
+        </AuthContext.Provider>
       </div>
   );
 }
