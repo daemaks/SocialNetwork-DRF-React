@@ -43,9 +43,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_("Username"), max_length=100, unique=True)
     avatar = models.ImageField(
         _("Avatar"),
+        default="default-user.png",
         upload_to="avatar/",
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         validators=[validate_image, validate_image_file_extension],
         help_text=("Not required. Maximum file size allowed is 2Mb"),
     )
