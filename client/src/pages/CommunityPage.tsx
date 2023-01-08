@@ -8,7 +8,7 @@ import { CommunityThread } from "../components/thread"
 import { BiCalendarPlus } from 'react-icons/bi'
 
 
-export default function CommunityDetails() {
+export default function CommunityPage() {
 
     const { id } = useParams()
     const { community } = useCommunity(id as string)

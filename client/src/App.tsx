@@ -3,7 +3,8 @@ import {Header} from './layouts/Header';
 import {Footer} from './layouts/Footer';
 import { Sidebar } from './layouts/Sidebar';
 import TreadsList from './pages/ThreadsPage';
-import CommunityDetails from './pages/CommunityPage';
+import CommunityPage from './pages/CommunityPage';
+import UserPage from './pages/UserPage';
 import LogOut from './components/logout';
 import { useEffect, useState } from 'react';
 import { IUser } from './model';
@@ -23,7 +24,8 @@ export default function App() {
           <Sidebar/>
             <Routes>
               <Route path="/" element={<TreadsList/>}/>
-              <Route path='/c/:id' element={<CommunityDetails/>} />
+              <Route path='/c/:id' element={<CommunityPage/>} />
+              <Route path='/u/:id' element={<UserPage/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>
           <Footer/>
