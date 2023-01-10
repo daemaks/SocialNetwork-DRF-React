@@ -8,7 +8,7 @@ def test_thread_create_and_safe_requests(api_account, api_community, client):
 
     """test_thread_create"""
     response = api_account.post(
-        reverse("threads_create"), {"title": "example", "community": 1}
+        reverse("threads-list"), {"title": "example", "community": 1}
     )
     data = response.data
     data_from_db = Thread.objects.all().first()
@@ -19,31 +19,39 @@ def test_thread_create_and_safe_requests(api_account, api_community, client):
     assert data["username"] == data_from_db.username.id
 
     """test_threads_list"""
-    response = client.get(reverse("treads_list"))
+    response = client.get(reverse("threads-list"))
 
     assert response.status_code == 200
 
     """test_threads_list_of_community"""
     response = client.get(
-        reverse("threads_list_of_community", kwargs={"pk": "1"})
+        reverse("threads-community-threads", kwargs={"pk": "1"})
     )
 
     assert response.status_code == 200
 
     """test_threads_list_of_community_404"""
     response = client.get(
-        reverse("threads_list_of_community", kwargs={"pk": "0"})
+        reverse("threads-community-threads", kwargs={"pk": "0"})
     )
+
+    """test_user_threads_list"""
+    response = client.get(reverse("threads-user-threads", kwargs={"pk": "1"}))
+
+    assert response.status_code == 200
+
+    """test_user_threads_list_404"""
+    response = client.get(reverse("threads-user-threads", kwargs={"pk": "0"}))
 
     assert response.status_code == 404
 
     """test_threads_retrieve"""
-    response = client.get(reverse("threads_details", kwargs={"pk": "1"}))
+    response = client.get(reverse("threads-detail", kwargs={"pk": "1"}))
 
     assert response.status_code == 200
 
     """test_threads_retrieve_404"""
-    response = client.get(reverse("threads_details", kwargs={"pk": "0"}))
+    response = client.get(reverse("threads-detail", kwargs={"pk": "0"}))
 
     assert response.status_code == 404
 
@@ -54,7 +62,7 @@ def test_thread_create_and_safe_requests(api_account, api_community, client):
 @pytest.mark.django_db
 def test_thread_update_by_owner(api_account, api_community):
     Thread.objects.create(username_id=1, title="example", community_id=1)
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     payload = {"title": "test example"}
     response = api_account.put(url, payload)
 
@@ -63,7 +71,7 @@ def test_thread_update_by_owner(api_account, api_community):
 
 @pytest.mark.django_db
 def test_thread_update_by_other_user(api_account_2, api_thread):
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     payload = {"title": "test example"}
     response = api_account_2.put(url, payload)
 
@@ -72,7 +80,7 @@ def test_thread_update_by_other_user(api_account_2, api_thread):
 
 @pytest.mark.django_db
 def test_thread_update_by_admin(api_admin_account, api_thread):
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     payload = {"title": "test example"}
     response = api_admin_account.put(url, payload)
 
@@ -85,7 +93,7 @@ def test_thread_update_by_admin(api_admin_account, api_thread):
 @pytest.mark.django_db
 def test_thread_destroy_by_owner(api_account, api_community):
     Thread.objects.create(username_id=1, title="example", community_id=1)
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     response = api_account.delete(url)
 
     assert response.status_code == 204
@@ -93,7 +101,7 @@ def test_thread_destroy_by_owner(api_account, api_community):
 
 @pytest.mark.django_db
 def test_thread_delete_by_other_user(api_account_2, api_thread):
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     response = api_account_2.delete(url)
 
     assert response.status_code == 403
@@ -101,7 +109,7 @@ def test_thread_delete_by_other_user(api_account_2, api_thread):
 
 @pytest.mark.django_db
 def test_thread_destroy_by_admin(api_admin_account, api_thread):
-    url = reverse("threads_details", kwargs={"pk": "1"})
+    url = reverse("threads-detail", kwargs={"pk": "1"})
     response = api_admin_account.delete(url)
 
     assert response.status_code == 204

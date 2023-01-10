@@ -9,12 +9,6 @@ class TagSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# class TagDetailsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Community
-#         fields = "__all__"
-
-
 class CommunitySerializer(serializers.ModelSerializer):
     tag = serializers.StringRelatedField(read_only=True)
 
@@ -25,7 +19,6 @@ class CommunitySerializer(serializers.ModelSerializer):
 
 class ThreadSerializer(serializers.ModelSerializer):
     username = serializers.StringRelatedField(read_only=True)
-    # community = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Thread

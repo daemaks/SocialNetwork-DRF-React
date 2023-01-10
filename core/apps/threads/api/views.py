@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from django.shortcuts import get_list_or_404
 
 from core.apps.threads.models import Comment, Community, Likes, Tag, Thread
@@ -10,7 +11,6 @@ from tools.permissions import IsOwnerOrReadOnly
 from .serializer import (
     CommentSerializer,
     CommunitySerializer,
-    # TagDetailsSerializer,
     TagSerializer,
     ThreadSerializer,
     CreateThreadSerializer,
@@ -28,18 +28,6 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = CommunitySerializer(communities, many=True)
         return Response(serializer.data)
 
-    # def get_queryset(self):
-    #     if self.action == "list":
-    #         return Tag.objects.all()
-    #     elif self.action == "retrieve":
-    #         return Community.objects.filter(tag=self.kwargs["pk"])
-
-    # def get_serializer_class(self):
-    #     if self.action == "list":
-    #         return TagSerializer
-    #     elif self.action == "retrieve":
-    #         return TagDetailsSerializer
-
 
 class CommunityListView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
@@ -49,20 +37,28 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
 
 class ThreadsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = ThreadSerializer
-
-    def get_queryset(self):
-        if self.action == "retrieve":
-            return Thread.objects.filter(pk=self.kwargs["pk"])
-        elif self.action == "list" and "pk" in self.kwargs:
-            treads = get_list_or_404(Thread, community=self.kwargs["pk"])
-            return treads
-        return Thread.objects.all()
+    queryset = Thread.objects.all()
 
     def get_serializer_class(self):
         if self.action == "create":
             return CreateThreadSerializer
         return ThreadSerializer
+
+    @action(methods=["get"], detail=True)
+    def community_threads(self, request, pk):
+        threads = get_list_or_404(Thread, community=pk)
+        return Response(
+            ThreadSerializer(threads, many=True).data,
+            status=status.HTTP_200_OK,
+        )
+
+    @action(methods=["get"], detail=True)
+    def user_threads(self, request, pk):
+        threads = get_list_or_404(Thread, username=pk)
+        return Response(
+            ThreadSerializer(threads, many=True).data,
+            status=status.HTTP_200_OK,
+        )
 
 
 class CommentsViewSet(viewsets.ModelViewSet):

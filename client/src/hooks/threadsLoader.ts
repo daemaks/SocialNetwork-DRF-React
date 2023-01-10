@@ -9,7 +9,7 @@ export function useThreads() {
 
     async function fetchThreads() {
         setLoading(true)
-        const response = await axiosInstance.get<IThread[]>('threads/')
+        const response = await axiosInstance.get<IThread[]>('threads/thread/')
         setThreads(response.data)
         setLoading(false)
     }
@@ -27,7 +27,7 @@ export function useCommunityThreads(id:any) {
 
     async function fetchCommunityThreads() {
         setLoading(true)
-        const response = await axiosInstance.get<IThread[]>(`threads/community/${id}/threads`)
+        const response = await axiosInstance.get<IThread[]>(`threads/thread/${id}/community_threads/`)
         setThreads(response.data)
         setLoading(false)
     }

@@ -71,7 +71,7 @@ class Community(models.Model):
 class Thread(models.Model):
     title = models.CharField(
         _("Title"),
-        help_text=_("Not requiered. Max Length - 150"),
+        help_text=_("Max Length - 150"),
         max_length=150,
         unique=False,
         blank=False,

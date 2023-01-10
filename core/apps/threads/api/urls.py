@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from . import actions
+from . import views
+
+router = routers.DefaultRouter()
+router.register(r"thread", views.ThreadsViewSet, basename="threads")
+print(router.urls)
 
 urlpatterns = [
     # Tag
@@ -13,14 +19,7 @@ urlpatterns = [
         name="community_details",
     ),
     # Threads
-    path(
-        "community/<int:pk>/threads",
-        actions.threads_list_of_community,
-        name="threads_list_of_community",
-    ),
-    path("", actions.treads_list, name="treads_list"),
-    path("<int:pk>/", actions.threads_details, name="threads_details"),
-    path("create/", actions.threads_create, name="threads_create"),
+    path("", include(router.urls)),
     # Comment
     path(
         "thread/<int:pk>/comments/",
