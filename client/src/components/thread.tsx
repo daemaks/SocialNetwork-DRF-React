@@ -21,7 +21,7 @@ const getTime = ( thread: IThread) => {
 
 export function Thread({ thread }:ThreadProps) {
     return (
-        <div className='border border-gray-300 flex bg-white rounded mb-6 ml-60 w-4/6'>
+        <div className='border border-gray-300 flex bg-white rounded mb-2'>
             <div className='bg-slate-100 w-9 rounded-l'></div>
             <div className='block px-1.5 w-full '>
                 <div className='flex mt-1.5 h-4 text-xs'>
@@ -60,7 +60,7 @@ export function Thread({ thread }:ThreadProps) {
 
 export function CommunityThread({ thread }:ThreadProps) {
     return (
-        <div className='border border-gray-300 flex bg-white rounded'>
+        <div className='mb-2 border border-gray-300 flex bg-white rounded'>
                 <div className='bg-slate-100 w-9 rounded-l'></div>
                 <div className='block px-1.5 w-full '>
                     <div className='flex mt-1.5 h-4 text-xs'>
