@@ -56,3 +56,4 @@ class UserViewSet(
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    lookup_field = "slug"

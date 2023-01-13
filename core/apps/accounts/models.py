@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.core.validators import validate_image_file_extension
+from django.template.defaultfilters import slugify
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from tools.validators import validate_image
@@ -40,25 +41,50 @@ class CustomAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("Email"), max_length=60, unique=True)
-    username = models.CharField(_("Username"), max_length=100, unique=True)
+
+    slug = models.SlugField(
+        _("Slug"), max_length=20, unique=True, blank=True, null=True
+    )
+
+    username = models.CharField(
+        _("username"), max_length=100, unique=True, blank=True, null=True
+    )
+
     avatar = models.ImageField(
         _("Avatar"),
-        default="default-user.png",
         upload_to="avatar/",
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
         validators=[validate_image, validate_image_file_extension],
         help_text=("Not required. Maximum file size allowed is 2Mb"),
     )
+
+    bg_image = models.ImageField(
+        _("User profile background image"),
+        upload_to="user_bg",
+        blank=True,
+        null=True,
+        validators=[validate_image, validate_image_file_extension],
+        help_text=("Not required. Maximum file size allowed is 2Mb"),
+    )
+
     about = models.TextField(_("About"), max_length=150, blank=True)
+
     date_joined = models.DateTimeField(_("Joined Date"), auto_now_add=True)
+
     is_active = models.BooleanField(default=True)
+
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
     objects = CustomAccountManager()
+
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = slugify(self.username)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username

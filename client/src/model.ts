@@ -1,10 +1,13 @@
 export interface ICommunity {
-    id: number
-    tag: string
-    title: string
-    description: string
-    image: string
-    members: number[]
+    id: number;
+    tag: string;
+    title: string;
+    slug: string;
+    description: string;
+    image?: string;
+    bg_image?: string;
+    created_at: Date;
+    members: any[];
 }
 
 export interface IThread {
@@ -26,7 +29,9 @@ export interface ITag {
 export interface IUser {
     id: number;
     username: string;
-    avatar: string;
+    slug: string;
+    avatar?: string;
+    bg_image?: string;
     about: string;
     date_joined: Date;
     is_staff: boolean;

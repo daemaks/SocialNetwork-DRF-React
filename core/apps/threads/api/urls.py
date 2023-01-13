@@ -13,7 +13,7 @@ urlpatterns = [
     # Communities
     path("community/", actions.community_list, name="community_list"),
     path(
-        "community/<int:pk>",
+        "community/<slug:slug>",
         actions.community_details,
         name="community_details",
     ),

@@ -5,7 +5,7 @@ from . import actions
 urlpatterns = [
     # Users Data
     path("", actions.user_list, name="user_list"),
-    path("<int:pk>/", actions.user_details, name="user_details"),
+    path("<slug:slug>/", actions.user_details, name="user_details"),
     # Registration
     path("register/", actions.register, name="create_user"),
     # Logout

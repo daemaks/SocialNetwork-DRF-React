@@ -34,6 +34,9 @@ class Community(models.Model):
         blank=False,
         null=False,
     )
+
+    slug = models.SlugField(_("Slug"), max_length=20, unique=True)
+
     description = models.CharField(
         _("Description"),
         help_text=_("Not requiered. Max Length - 100"),
@@ -41,24 +44,38 @@ class Community(models.Model):
         blank=False,
         null=False,
     )
+
     image = models.ImageField(
         _("Community picture"),
         upload_to="community_picture/",
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
         validators=[validate_image, validate_image_file_extension],
         help_text=("Not required. Maximum file size allowed is 2Mb"),
     )
+
+    bg_image = models.ImageField(
+        _("Community background image"),
+        upload_to="community_bg",
+        blank=True,
+        null=True,
+        validators=[validate_image, validate_image_file_extension],
+        help_text=("Not required. Maximum file size allowed is 2Mb"),
+    )
+
     tag = models.ForeignKey(
         Tag,
         on_delete=models.PROTECT,
         blank=False,
         null=False,
     )
+
     members = models.ManyToManyField(
         Account,
         blank=True,
     )
+    
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _("Community")

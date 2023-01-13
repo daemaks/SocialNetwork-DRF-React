@@ -33,6 +33,7 @@ class CommunityListView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
+    lookup_field = "slug"
 
 
 class ThreadsViewSet(viewsets.ModelViewSet):

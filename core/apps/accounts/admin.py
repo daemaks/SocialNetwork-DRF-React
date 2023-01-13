@@ -17,6 +17,7 @@ class UserAdminConfig(UserAdmin):
         "email",
         "username",
         "avatar",
+        "slug",
         "is_active",
         "is_staff",
     )
@@ -28,6 +29,7 @@ class UserAdminConfig(UserAdmin):
                     "email",
                     "username",
                     "avatar",
+                    "slug",
                 )
             },
         ),
@@ -45,6 +47,7 @@ class UserAdminConfig(UserAdmin):
                 "fields": (
                     "email",
                     "username",
+                    "slug",
                     "password1",
                     "password2",
                     "is_active",

@@ -35,7 +35,9 @@ class AccountSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "username",
+            "slug",
             "avatar",
+            "bg_image",
             "about",
             "date_joined",
             "is_staff",
