@@ -32,7 +32,7 @@ export function useTagCommunities(id:any) {
     return { communities }
 }
 
-export function useCommunity(id:any) {
+export function useCommunity(slug:any) {
     const [community, setCommunity] = useState<ICommunity | null>(null)
 
     
@@ -41,7 +41,7 @@ export function useCommunity(id:any) {
     }, [])
     
     async function fetchCommunity() {
-        const response = await axiosInstance.get<ICommunity>(`threads/community/${id}`)
+        const response = await axiosInstance.get<ICommunity>(`threads/community/${slug}`)
         setCommunity(response.data)
     }
 

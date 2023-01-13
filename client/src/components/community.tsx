@@ -6,9 +6,20 @@ interface CommunityProp {
 }
 
 export function Community({ community }:CommunityProp) {
+
+    const getBackground = (data:any) => {
+        if (data != null) {
+            return `url(${data})`
+        } else {
+            return 'url(https://www.wallpapers.net/data-programming-codes-hd-wallpaper/download/3840x2160.jpg)'
+        }
+    }
+
     return (
         <div className='w-full'>
-            <div className='h-36 bg-cover w-full' style={{ backgroundImage: "url(https://www.wallpapers.net/data-programming-codes-hd-wallpaper/download/3840x2160.jpg)" }}>
+            <div 
+                className='h-36 bg-cover w-full' 
+                style={{ backgroundImage: getBackground(community?.bg_image) }}>
             </div>
             <div className='bg-white'>
                 <div className="mx-auto max-w-[984px] flex">

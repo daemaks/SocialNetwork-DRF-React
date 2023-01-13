@@ -24,7 +24,7 @@ export default function App() {
           <Sidebar/>
             <Routes>
               <Route path="/" element={<TreadsList/>}/>
-              <Route path='/c/:id' element={<CommunityPage/>} />
+              <Route path='/c/:slug' element={<CommunityPage/>} />
               <Route path='/u/:id' element={<UserPage/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>

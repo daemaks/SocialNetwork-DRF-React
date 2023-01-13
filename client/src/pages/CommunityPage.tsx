@@ -10,17 +10,16 @@ import { BiCalendarPlus } from 'react-icons/bi'
 
 export default function CommunityPage() {
 
-    const { id } = useParams()
-    const { community } = useCommunity(id as string)
-    const {loading, threads} = useCommunityThreads(id)
+    const { slug } = useParams()
+    const { community } = useCommunity(slug as string)
+    const {loading, threads} = useCommunityThreads(slug)
 
     const getCreatedTime = (community : ICommunity | null) => {
-        // add create field in the Community model
-        // return new Date(community.created).toDateString()
-        return new Date(2022, 7, 12).toDateString()
+        if (community != null) {
+            return new Date(community.created_at).toDateString()
+        }
       }
-    
-
+      
     return (
         <div className="max-w-full mt-12 ml-60">
             <Community community={community as ICommunity} key={community?.id} />

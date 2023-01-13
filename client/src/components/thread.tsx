@@ -26,7 +26,7 @@ export function Thread({ thread }:ThreadProps) {
             <div className='block px-1.5 w-full '>
                 <div className='flex mt-1.5 h-4 text-xs'>
                     <img className='rounded-full w-4 h-4 mr-1.5' src={thread.community.image}/>
-                    <Link to={`/c/${thread.community.id}`} className='mr-0.5 font-bold hover:underline'>c/{thread.community.title} </Link>
+                    <Link to={`/c/${thread.community.slug}`} className='mr-0.5 font-bold hover:underline'>c/{thread.community.title} </Link>
                     <span className='text-slate-500'> • Posted by u/{thread.username} {getTime(thread)} ago</span>
                 </div>
                 <div className='pt-1'>
