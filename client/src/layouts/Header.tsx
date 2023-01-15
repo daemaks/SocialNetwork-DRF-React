@@ -47,7 +47,7 @@ export function Header() {
                         <div className='rounded-full flex justify-between items-center cursor-pointer'>
                             <div className='flex rounded-full p-1 duration-200 hover:bg-slate-100'>
                                 <img className='rounded-full w-6 h-6 mr-1.5' src={`http://127.0.0.1:8000${user.avatar}`} alt='pic'/>
-                                <Link to={`/u/${user.id}`} className='ml-1'>u/{user.username}</Link>
+                                <Link to={`/u/${user.slug}`} className='ml-1'>u/{user.username}</Link>
                             </div>
                             <div className='ml-2 rounded-full p-1 duration-200 hover:bg-slate-100'>
                                 <Link to="/logout">

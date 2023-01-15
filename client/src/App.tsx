@@ -25,7 +25,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<TreadsList/>}/>
               <Route path='/c/:slug' element={<CommunityPage/>} />
-              <Route path='/u/:id' element={<UserPage/>}/>
+              <Route path='/u/:slug' element={<UserPage/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>
           <Footer/>

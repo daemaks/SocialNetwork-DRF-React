@@ -5,6 +5,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r"thread", views.ThreadsViewSet, basename="threads")
+print(router.urls)
 
 urlpatterns = [
     # Tag

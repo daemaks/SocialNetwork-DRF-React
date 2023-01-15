@@ -47,7 +47,7 @@ class ThreadsViewSet(viewsets.ModelViewSet):
 
     @action(methods=["get"], detail=True)
     def community_threads(self, request, pk):
-        threads = get_list_or_404(Thread, community=pk)
+        threads = get_list_or_404(Thread, community__slug__contains=pk)
         return Response(
             ThreadSerializer(threads, many=True).data,
             status=status.HTTP_200_OK,
@@ -55,7 +55,7 @@ class ThreadsViewSet(viewsets.ModelViewSet):
 
     @action(methods=["get"], detail=True)
     def user_threads(self, request, pk):
-        threads = get_list_or_404(Thread, username=pk)
+        threads = get_list_or_404(Thread, username__slug__contains=pk)
         return Response(
             ThreadSerializer(threads, many=True).data,
             status=status.HTTP_200_OK,
