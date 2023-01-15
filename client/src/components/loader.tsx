@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Loader() {
   return (
-    <p>loading...</p>
+    <div className='flex justify-center items-center w-full h-screen'>
+      <div className='loader-circle'></div>
+    </div>
   )
 }
