@@ -9,11 +9,6 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
-.menu-open {
-    display: block;
-    opacity: 1;
-}
-
 .loader-circle {
     width: 100px;
     height: 100px;
@@ -32,4 +27,21 @@ body {
     {
         transform: translate(-50%, -50%) rotate(360deg);
     }
+}
+
+.item {
+    position: relative;
+    cursor: pointer;
+}
+
+.item .link {
+    display: none;
+}
+
+.item.open .arrow {
+    transform: rotate(180deg);
+}
+
+.item.open .link {
+    display: block;
 }

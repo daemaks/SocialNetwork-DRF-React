@@ -22,7 +22,7 @@ export function Sidebar() {
                         </Link>
                     </div>
                     <div className="antialiased text-[10px] font-bold text-slate-500 pb-4">TOPICS</div>
-                    <div className="text-sm pb-4">
+                    <div className="w-full text-sm pb-4">
                         {tags.map(tag => <Tag tag={tag} key={tag.id}/>)}
                     </div>
                 <div>
