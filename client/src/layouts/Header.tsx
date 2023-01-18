@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Modal } from '../components/modal'
-import { InOrUp } from '../components/loginOrRegister'
+import { Modal } from './modal'
+import { InOrUp } from '../auth/loginOrRegister'
 import { useAuth } from '../context/AuthContext'
 import { BiExit } from 'react-icons/bi'
 

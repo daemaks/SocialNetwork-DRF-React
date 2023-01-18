@@ -5,7 +5,7 @@ import { Sidebar } from './layouts/Sidebar';
 import TreadsList from './pages/ThreadsPage';
 import CommunityPage from './pages/CommunityPage';
 import UserPage from './pages/UserPage';
-import LogOut from './components/logout';
+import LogOut from './auth/logout';
 import { useEffect, useState } from 'react';
 import { IUser } from './model';
 import { AuthContext } from './context/AuthContext';

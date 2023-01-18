@@ -3,7 +3,7 @@ import { useCommunity } from "../hooks/communitiesLoader";
 import { Community } from "../components/community";
 import { ICommunity } from "../model";
 import { useCommunityThreads } from "../hooks/threadsLoader";
-import Loader from "../components/loader"
+import Loader from "../layouts/loader"
 import { CommunityThread } from "../components/thread"
 import { BiCalendarPlus } from 'react-icons/bi'
 

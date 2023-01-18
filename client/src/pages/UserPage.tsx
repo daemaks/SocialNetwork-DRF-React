@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useUser } from '../hooks/userLoader'
 import { useUserThreads } from '../hooks/threadsLoader'
-import Loader from "../components/loader"
+import Loader from "../layouts/loader"
 import { Thread } from "../components/thread"
 
 export default function UserPage() {

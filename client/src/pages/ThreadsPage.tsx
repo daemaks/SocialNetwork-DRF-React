@@ -1,6 +1,6 @@
 import { useThreads } from "../hooks/threadsLoader"
 import { Thread } from "../components/thread"
-import Loader from "../components/loader"
+import Loader from "../layouts/loader"
 
 
 export default function TreadsList() {
