@@ -40,6 +40,7 @@ class CommunityFactory(factory.django.DjangoModelFactory):
         model = Community
 
     title = "Test Community"
+    slug = "comtest"
     description = fake.text()
     tag = factory.SubFactory(TagFactory)
 

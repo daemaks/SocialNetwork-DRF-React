@@ -25,7 +25,7 @@ def test_thread_create_and_safe_requests(api_account, api_community, client):
 
     """test_threads_list_of_community"""
     response = client.get(
-        reverse("threads-community-threads", kwargs={"pk": "1"})
+        reverse("threads-community-threads", kwargs={"pk": "comtest"})
     )
 
     assert response.status_code == 200
@@ -36,7 +36,9 @@ def test_thread_create_and_safe_requests(api_account, api_community, client):
     )
 
     """test_user_threads_list"""
-    response = client.get(reverse("threads-user-threads", kwargs={"pk": "1"}))
+    response = client.get(
+        reverse("threads-user-threads", kwargs={"pk": "user_test"})
+    )
 
     assert response.status_code == 200
 

@@ -20,6 +20,8 @@ def test_community_requests(api_community, client):
     assert response.status_code == 200
 
     """test_community_details"""
-    response = client.get(reverse("community_details", kwargs={"pk": "1"}))
+    response = client.get(
+        reverse("community_details", kwargs={"slug": "comtest"})
+    )
 
     assert response.status_code == 200

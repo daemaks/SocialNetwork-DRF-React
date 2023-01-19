@@ -63,7 +63,7 @@ def test_login_user_fail(api_account, client):
 
 @pytest.mark.django_db
 def test_user_retrieve(api_account):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_account.get(url)
     data = response.data
     data_from_db = Account.objects.all().first()
@@ -79,14 +79,14 @@ def test_user_retrieve(api_account):
 
 @pytest.mark.django_db
 def test_user_update_by_owner(api_account):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_account.put(url, {"username": "tester"})
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_user_update_by_other_user(api_account, api_account_2):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_account_2.put(url, {"username": "tester"})
 
     assert response.status_code == 403
@@ -94,7 +94,7 @@ def test_user_update_by_other_user(api_account, api_account_2):
 
 @pytest.mark.django_db
 def test_user_update_by_admin(api_account, api_admin_account):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_admin_account.put(url, {"username": "tester"})
 
     assert response.status_code == 403
@@ -105,14 +105,14 @@ def test_user_update_by_admin(api_account, api_admin_account):
 
 @pytest.mark.django_db
 def test_user_destroy_by_owner(api_account):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_account.delete(url)
     assert response.status_code == 204
 
 
 @pytest.mark.django_db
 def test_user_destroy_by_other_user(api_account, api_account_2):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_account_2.delete(url)
 
     assert response.status_code == 403
@@ -120,7 +120,7 @@ def test_user_destroy_by_other_user(api_account, api_account_2):
 
 @pytest.mark.django_db
 def test_user_destroy_by_admin(api_account, api_admin_account):
-    url = reverse("user_details", kwargs={"pk": "1"})
+    url = reverse("user_details", kwargs={"slug": "user_test"})
     response = api_admin_account.delete(url)
 
     assert response.status_code == 204
