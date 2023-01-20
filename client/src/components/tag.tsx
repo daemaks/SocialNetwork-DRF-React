@@ -23,10 +23,10 @@ export function Tag({tag}:TagProp) {
                 <div className='bg-slate-400 '>
                     { communities.map(community => {
                         return (
-                            <div>
-                                <Link to={`/c/${community.slug}`} key={community.id} className='link capitalize'>{community.title}</Link>
+                            <div key={community.id}>
+                                <Link to={`/c/${community.slug}`} className='link capitalize'>{community.title}</Link>
                             </div>
-                        )
+                        ) 
                     })}
                 </div>
             </div>

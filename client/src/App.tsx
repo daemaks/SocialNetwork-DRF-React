@@ -9,6 +9,8 @@ import LogOut from './auth/logout';
 import { useEffect, useState } from 'react';
 import { IUser } from './model';
 import { AuthContext } from './context/AuthContext';
+import ThreadCreate from './actions/threadsActions/create';
+import ThreadUpdate from './actions/threadsActions/update';
 
 export default function App() {
   const [user, setUser] = useState<IUser | null>(null)
@@ -26,6 +28,8 @@ export default function App() {
               <Route path="/" element={<TreadsList/>}/>
               <Route path='/c/:slug' element={<CommunityPage/>} />
               <Route path='/u/:slug' element={<UserPage/>}/>
+              <Route path='/t/create' element={<ThreadCreate/>}/>
+              <Route path='/t/:id/create' element={<ThreadUpdate/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>
           <Footer/>
