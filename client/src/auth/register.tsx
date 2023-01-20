@@ -27,7 +27,7 @@ export default function SignUp({signUp}: SignUpProps) {
         event.preventDefault();
 
         axiosInstance
-            .post(`user/register/`, {
+            .post(`user/auth/register/`, {
                 email: formData.email,
                 username: formData.username,
                 password: formData.password,
