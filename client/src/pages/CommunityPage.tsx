@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
-import { useCommunity } from "../hooks/communitiesLoader"; 
+import { useParams, Link } from "react-router-dom";
+import { useCommunity } from "../hooks/communitiesLoader";
+import { useAuth } from "../context/AuthContext"; 
 import { Community } from "../components/community";
 import { ICommunity } from "../model";
 import { useCommunityThreads } from "../hooks/threadsLoader";
@@ -14,6 +15,12 @@ export default function CommunityPage() {
     const { community } = useCommunity(slug as string)
     const {loading, threads} = useCommunityThreads(slug)
 
+    const context = useAuth()
+        if ( ! context ) {
+            return null;
+        }
+        const { user } = context;
+
     const getCreatedTime = (community : ICommunity | null) => {
         if (community != null) {
             return new Date(community.created_at).toDateString()
@@ -21,12 +28,12 @@ export default function CommunityPage() {
       }
       
     return (
-        <div className="max-w-full mt-12 ml-60">
+        <div>
             <Community community={community as ICommunity} key={community?.id} />
             <div className="flex flex-row justify-center mx-auto py-5 px-6">
                 <div className="w-[640px]">
-                { loading && <Loader /> }
-                { threads.map(thread => <CommunityThread thread={ thread } key={ thread.id } />)}
+                    { loading && <Loader /> }
+                    { threads.map(thread => <CommunityThread thread={ thread } key={ thread.id } />)}
                 </div>
                 <div className="block w-[320px] ml-6">
                     <div className="flex flex-col h-full">
@@ -45,6 +52,18 @@ export default function CommunityPage() {
                                     <span className="text-slate-500 ml-1">Created {getCreatedTime(community)}</span>
                                 </div>
                                 <hr className="my-6"/>
+                                { user && (
+                                    <div>
+                                        <div className="flex flex-col">
+                                            <Link 
+                                                to='/t/create'
+                                                state={{community: community as ICommunity}}
+                                                className='p-1 bg-zinc-500 rounded-full duration-200 text-center hover:bg-slate-400'
+                                                >Create Post</Link>
+                                        </div>
+                                        <hr className="my-6"/>
+                                    </div>
+                                )}
                                 <div className="block">
                                     <div className="text-base leading-5 font-medium">
                                         {community?.members.length}

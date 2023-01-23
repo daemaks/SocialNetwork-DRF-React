@@ -20,7 +20,6 @@ export default function UserPage() {
     }
 
     return(
-        <div className="flex max-w-full mt-12 ml-60">
             <div className="flex flex-row justify-center mx-auto py-5 px-6">
                 <div className="w-[640px]">
                     { loading && <Loader /> }
@@ -45,6 +44,5 @@ export default function UserPage() {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }

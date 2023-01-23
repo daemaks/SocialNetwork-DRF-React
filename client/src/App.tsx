@@ -24,14 +24,16 @@ export default function App() {
         <AuthContext.Provider value={{user, setUser}}>
           <Header/>
           <Sidebar/>
+          <div className="max-w-full mt-12 ml-60">
             <Routes>
               <Route path="/" element={<TreadsList/>}/>
               <Route path='/c/:slug' element={<CommunityPage/>} />
               <Route path='/u/:slug' element={<UserPage/>}/>
               <Route path='/t/create' element={<ThreadCreate/>}/>
-              <Route path='/t/:id/create' element={<ThreadUpdate/>}/>
+              <Route path='/t/:id/update' element={<ThreadUpdate/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>
+          </div>
           <Footer/>
         </AuthContext.Provider>
       </div>
