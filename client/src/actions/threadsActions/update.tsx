@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../../axios";
 import { IThread } from "../../model";
 import { MdCheckCircleOutline, MdOutlineCancel } from 'react-icons/md'
+import { FiTrash } from 'react-icons/fi'
+import DeleteThread from "./delete";
 
 interface ThreadProps {
     thread:IThread
@@ -67,12 +69,17 @@ export default function ThreadUpdate({thread , onClose} : ThreadProps) {
                             onClick={handleSubmit}
                             className="ml-1 p-1 rounded bg-green-700">
                                 <MdCheckCircleOutline/>
-                            </button>
+                        </button>
                         <button
                             onClick={onClose}
-                            className="p-1 rounded bg-red-700">
+                            className="ml-1 p-1 rounded bg-yellow-300">
                                 <MdOutlineCancel/>
-                            </button>
+                        </button>
+                        <button 
+                            onClick={() => {DeleteThread(thread.id)}}
+                            className="p-1 rounded bg-red-700">
+                                <FiTrash/>
+                        </button>
                     </div>
                 </div>
         </div>

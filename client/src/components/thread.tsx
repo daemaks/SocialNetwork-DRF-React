@@ -24,7 +24,7 @@ const getTime = ( thread: IThread) => {
 
 export function Thread({ thread }:ThreadProps) {
     const [updateState, setUpdateState] = useState(false)
-
+    console.log(typeof(thread.id))
     const context = useAuth()
         if ( ! context ) {
             return null;
