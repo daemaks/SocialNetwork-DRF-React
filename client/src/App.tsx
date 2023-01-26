@@ -30,7 +30,6 @@ export default function App() {
               <Route path='/c/:slug' element={<CommunityPage/>} />
               <Route path='/u/:slug' element={<UserPage/>}/>
               <Route path='/t/create' element={<ThreadCreate/>}/>
-              <Route path='/t/:id/update' element={<ThreadUpdate/>}/>
               <Route path='/logout' element={<LogOut/>}/>
             </Routes>
           </div>

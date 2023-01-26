@@ -81,6 +81,7 @@ export default function ThreadCreate() {
                             onClick={handleSubmit}
                             className="ml-2 py-1 px-2 border-2 rounded font-semibold">Post</button>
                         <button 
+                            onClick={() => navigate(-1)}
                             className="py-1 px-2 border-2 rounded font-semibold">Cancel</button>
                     </div>
                 </div>
