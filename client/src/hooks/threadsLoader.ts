@@ -21,6 +21,22 @@ export function useThreads() {
     return { threads, loading }
 }
 
+export function useThread(id:any) {
+    const [thread, setThread] = useState<IThread | null>(null)
+
+    
+    useEffect(() => {
+        fetchThread()
+    }, [])
+    
+    async function fetchThread() {
+        const response = await axiosInstance.get<IThread>(`threads/thread/${id}`)
+        setThread(response.data)
+    }
+
+    return { thread }
+}
+
 export function useCommunityThreads(slug:any) {
     const [threads, setThreads] = useState<IThread[]>([])
     const [loading, setLoading] = useState(false)

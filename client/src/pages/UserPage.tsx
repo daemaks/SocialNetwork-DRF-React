@@ -25,7 +25,7 @@ export default function UserPage() {
                     { loading && <Loader /> }
                     { threads.map(thread => <Thread thread={ thread } key={ thread.id } />)}
                 </div>
-                <div className='bg-white border border-gray-300 rounded block w-[320px] ml-6'>
+                <div className='bg-white h-fit border border-gray-300 rounded block w-[320px] ml-6'>
                     <div className='rounded-t h-20 bg-cover w-full' style={{ backgroundImage: getBackground(user?.bg_image) }}></div>
                     <div className='w-full p-2'>
                         <div className='flex content-center mx-auto h-16 w-16 overflow-hidden rounded-full border-2 bg-white'>

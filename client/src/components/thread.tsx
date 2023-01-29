@@ -4,27 +4,14 @@ import { BiLike, BiComment, BiPencil } from 'react-icons/bi'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import ThreadUpdate from '../actions/threadsActions/update'
+import getTime from '../tools/getTime'
 
 interface ThreadProps {
     thread:IThread
 }
 
-const getTime = ( thread: IThread) => {
-    const dateNow = new Date()
-    const dateThread = new Date(thread.updated_at)
-    const timeDifference  = (dateNow.getTime() - dateThread.getTime())
-    const hourDifference = timeDifference / (1000 * 3600)
-    if (hourDifference > 23) {
-        const dayDifference = timeDifference / (1000 * 3600 * 24)
-        return `${Math.round(dayDifference)} days`
-    } else {
-        return `${Math.round(hourDifference)} hours`
-    }
-}
-
 export function Thread({ thread }:ThreadProps) {
     const [updateState, setUpdateState] = useState(false)
-    console.log(typeof(thread.id))
     const context = useAuth()
         if ( ! context ) {
             return null;
@@ -39,13 +26,12 @@ export function Thread({ thread }:ThreadProps) {
                 <div className='block px-1.5 w-full '>
                     <div className='flex justify-between mt-1.5 h-4 text-xs'>
                         <div className='flex'>      
-                            <img className='rounded-full w-4 h-4 mr-1.5' src={thread.community.image}/>
+                            <img className='rounded-full w-5 h-5 mr-1.5' src={thread.community.image}/>
                             <Link to={`/c/${thread.community.slug}`} className='mr-0.5 font-bold hover:underline'>c/{thread.community.title} </Link>
                             <span className='text-slate-500'> • Posted by u/{thread.username} {getTime(thread)} ago</span>
                             { thread.created_at != thread.updated_at ? (
                                 <span className='ml-1.5 text-slate-500'>(edited)</span>
                             ) : (<></>)}
-                            <span></span>
                         </div>
                         <div>
                             {user?.username == thread.username ? (
@@ -76,10 +62,12 @@ export function Thread({ thread }:ThreadProps) {
                             </a>
                         </div>
                         <div>
-                            <a href="#" className='flex items-center'>
+                            <Link 
+                                to={`/t/${thread.id}`}
+                                className='flex items-center'>
                             <BiComment size='1.3rem'/>
                             <span className='ml-1'>Comments</span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -114,10 +102,10 @@ export function CommunityThread({ thread }:ThreadProps) {
                             </a>
                         </div>
                         <div>
-                            <a href="#" className='flex items-center'>
+                            <Link to={`/t/${thread.id}`} className='flex items-center'>
                             <BiComment size='1.3rem'/>
                             <span className='ml-1'>Comments</span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
