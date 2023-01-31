@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from core.apps.threads.models import Comment, Community, Tag, Thread
+from core.apps.accounts.api.serializer import AccountSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -45,8 +46,7 @@ class CreateThreadSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.StringRelatedField(read_only=True)
-    thread = serializers.StringRelatedField(read_only=True)
+    username = AccountSerializer()
 
     class Meta:
         model = Comment

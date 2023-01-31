@@ -36,3 +36,12 @@ export interface IUser {
     date_joined: Date;
     is_staff: boolean;
 }
+
+export interface IComment {
+    id: number;
+    username: IUser;
+    thread: number;
+    text: string;
+    created_at: Date;
+    updated_at: Date;
+}

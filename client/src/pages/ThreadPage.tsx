@@ -2,14 +2,16 @@ import { useParams, useNavigate, Link } from "react-router-dom"
 import { useThread } from "../hooks/threadsLoader"
 import { BsCardText } from 'react-icons/bs'
 import { TfiClose } from 'react-icons/tfi'
-import { IThread } from "../model"
 import getTime from "../tools/getTime"
+import { useComments } from "../hooks/commentsLoader"
+import Comment from "../components/comment"
 
 
 export default function ThreadItem() {
     const { id } = useParams()
     const navigate = useNavigate()
     const {thread} = useThread(id)
+    const { comments } = useComments(id)
 
     return(
         <>
@@ -44,8 +46,11 @@ export default function ThreadItem() {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            #comment
+                        <div className="mb-4">
+                            #createcomment
+                        </div>
+                        <div className="mb-4">
+                            { comments.map(comment => <Comment comment={ comment } key={ comment.id } />)}
                         </div>
                     </div>
                 </div>
