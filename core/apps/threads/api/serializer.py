@@ -46,7 +46,7 @@ class CreateThreadSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    username = AccountSerializer()
+    username = AccountSerializer(read_only=True)
 
     class Meta:
         model = Comment

@@ -1,5 +1,4 @@
-import { useNavigate} from "react-router-dom"
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import axiosInstance from "../../axios";
 import { IThread } from "../../model";
 import { MdCheckCircleOutline, MdOutlineCancel } from 'react-icons/md'
@@ -11,8 +10,6 @@ interface ThreadProps {
     onClose: () => void
 }
 export default function ThreadUpdate({thread , onClose} : ThreadProps) {
-
-    const navigate = useNavigate()
     
     const initialFormData = Object.freeze({
         title: thread.title,
@@ -27,7 +24,6 @@ export default function ThreadUpdate({thread , onClose} : ThreadProps) {
             ...formData,
             [event.target.name]: event.target.value.trim(),
         })
-        console.log(formData)
     }
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -81,7 +77,7 @@ export default function ThreadUpdate({thread , onClose} : ThreadProps) {
                                 <FiTrash/>
                         </button>
                     </div>
-                </div>
+            </div>
         </div>
     )
 }

@@ -38,7 +38,9 @@ export default function CommentCreate(id: any) {
                 placeholder="what are you thoughts?"></textarea>
             <button 
                 onClick={handleSubmit}
-                className="ml-2 py-1 px-2 border-2 rounded font-semibold">Post</button>
+                className="p-1 rounded border">
+                Post
+            </button>
         </div>
     )
 }

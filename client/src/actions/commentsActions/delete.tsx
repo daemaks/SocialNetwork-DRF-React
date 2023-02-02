@@ -1,9 +1,9 @@
 import axiosInstance from "../../axios"
 
-export default function DeleteThread (id : number) {
+export default function DeleteComment (id : number) {
 
     axiosInstance
-        .delete(`threads/thread/${id}/`)
+        .delete(`threads/comment/${id}/`)
         .then(() => {
             window.location.reload()
         })
