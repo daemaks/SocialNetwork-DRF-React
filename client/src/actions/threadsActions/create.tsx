@@ -21,7 +21,6 @@ export default function ThreadCreate() {
 
     const initialFormData = Object.freeze({
         title: '',
-        community: '',
         content: '',
     });
 

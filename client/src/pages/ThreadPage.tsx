@@ -5,18 +5,18 @@ import { TfiClose } from 'react-icons/tfi'
 import getTime from "../tools/getTime"
 import { useComments } from "../hooks/commentsLoader"
 import Comment from "../components/comment"
-
+import CommentCreate from "../actions/commentsActions/create"
 
 export default function ThreadItem() {
     const { id } = useParams()
     const navigate = useNavigate()
-    const {thread} = useThread(id)
+    const { thread } = useThread(id)
     const { comments } = useComments(id)
 
     return(
         <>
             <div className='overflow-hidden'>
-                <div className='fixed bg-black opacity-80 top-12 right-0 left-0 bottom-0'></div>
+                <div className='fixed bg-black opacity-80 top-12 right-0 left-0 bottom-0' onClick={() => {navigate(-1)}}></div>
                 <div className='w-[1280px] bg-white absolute left-1/2 -translate-x-1/2'>
                     <div className="flex justify-between items-center w-full bg-black text-white px-8 py-4">
                         <div className="flex items-center">
@@ -47,7 +47,7 @@ export default function ThreadItem() {
                             </div>
                         </div>
                         <div className="mb-4">
-                            #createcomment
+                            <CommentCreate id={thread?.id}/>
                         </div>
                         <div className="mb-4">
                             { comments.map(comment => <Comment comment={ comment } key={ comment.id } />)}
