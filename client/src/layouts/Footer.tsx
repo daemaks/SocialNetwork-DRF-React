@@ -1,5 +1,3 @@
 export function Footer() {
-    return (
-        <>Footer</>
-    )
+  return <>Footer</>;
 }

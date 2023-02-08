@@ -2,46 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 body {
-    background-color: rgb(226 232 240);
-    font-family: 'Noto Sans', sans-serif;
+  background-color: rgb(226 232 240);
+  font-family: "Noto Sans", sans-serif;
 }
 
 .loader-circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 10px solid rgba(255, 255, 255, .1);
-    border-top: 10px solid #fff;
-    animation: animate 1.5s infinite linear;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 10px solid rgba(255, 255, 255, 0.1);
+  border-top: 10px solid #fff;
+  animation: animate 1.5s infinite linear;
 }
 
 @keyframes animate {
-    0%
-    {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100%
-    {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .item {
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
 }
 
 .item .link {
-    display: none;
+  display: none;
 }
 
 .item.open .arrow {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .item.open .link {
-    display: block;
+  display: block;
 }

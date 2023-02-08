@@ -1,74 +1,76 @@
-import React, {useState, useEffect} from 'react'
-import axiosInstance from '../axios'
-import { IThread } from '../model'
-
+import { useState, useEffect } from "react";
+import axiosInstance from "../axios";
+import { IThread } from "../model";
 
 export function useThreads() {
-    const [threads, setThreads] = useState<IThread[]>([])
-    const [loading, setLoading] = useState(false)
+  const [threads, setThreads] = useState<IThread[]>([]);
+  const [loading, setLoading] = useState(false);
 
-    async function fetchThreads() {
-        setLoading(true)
-        const response = await axiosInstance.get<IThread[]>('threads/thread/')
-        setThreads(response.data)
-        setLoading(false)
-    }
+  async function fetchThreads() {
+    setLoading(true);
+    const response = await axiosInstance.get<IThread[]>("threads/thread/");
+    setThreads(response.data);
+    setLoading(false);
+  }
 
-    useEffect(() => {
-        fetchThreads()
-    }, [])
+  useEffect(() => {
+    fetchThreads();
+  }, []);
 
-    return { threads, loading }
+  return { threads, loading };
 }
 
-export function useThread(id:any) {
-    const [thread, setThread] = useState<IThread | null>(null)
+export function useThread(id: any) {
+  const [thread, setThread] = useState<IThread | null>(null);
 
-    
-    useEffect(() => {
-        fetchThread()
-    }, [])
-    
-    async function fetchThread() {
-        const response = await axiosInstance.get<IThread>(`threads/thread/${id}`)
-        setThread(response.data)
-    }
+  useEffect(() => {
+    fetchThread();
+  }, []);
 
-    return { thread }
+  async function fetchThread() {
+    const response = await axiosInstance.get<IThread>(`threads/thread/${id}`);
+    setThread(response.data);
+  }
+
+  return { thread };
 }
 
-export function useCommunityThreads(slug:any) {
-    const [threads, setThreads] = useState<IThread[]>([])
-    const [loading, setLoading] = useState(false)
+export function useCommunityThreads(slug: any) {
+  const [threads, setThreads] = useState<IThread[]>([]);
+  const [loading, setLoading] = useState(false);
 
-    async function fetchCommunityThreads() {
-        setLoading(true)
-        const response = await axiosInstance.get<IThread[]>(`threads/thread/${slug}/community_threads/`)
-        setThreads(response.data)
-        setLoading(false)
-    }
+  async function fetchCommunityThreads() {
+    setLoading(true);
+    const response = await axiosInstance.get<IThread[]>(
+      `threads/thread/${slug}/community_threads/`
+    );
+    setThreads(response.data);
+    setLoading(false);
+  }
 
-    useEffect(() => {
-        fetchCommunityThreads()
-    }, [])
+  useEffect(() => {
+    fetchCommunityThreads();
+  }, []);
 
-    return { threads, loading }
+  return { threads, loading };
 }
 
-export function useUserThreads(id:any) {
-    const [threads, setThreads] = useState<IThread[]>([])
-    const [loading, setLoading] = useState(false)
+export function useUserThreads(id: any) {
+  const [threads, setThreads] = useState<IThread[]>([]);
+  const [loading, setLoading] = useState(false);
 
-    async function fetchUserThreads() {
-        setLoading(true)
-        const response = await axiosInstance.get<IThread[]>(`threads/thread/${id}/user_threads/`)
-        setThreads(response.data)
-        setLoading(false)
-    }
+  async function fetchUserThreads() {
+    setLoading(true);
+    const response = await axiosInstance.get<IThread[]>(
+      `threads/thread/${id}/user_threads/`
+    );
+    setThreads(response.data);
+    setLoading(false);
+  }
 
-    useEffect(() => {
-        fetchUserThreads()
-    }, [])
+  useEffect(() => {
+    fetchUserThreads();
+  }, []);
 
-    return { threads, loading }
+  return { threads, loading };
 }

@@ -1,12 +1,9 @@
-import axiosInstance from "../../axios"
+import axiosInstance from "../../axios";
 
-export default function DeleteComment (id : number) {
+export default function DeleteComment(id: number) {
+  axiosInstance.delete(`threads/comment/${id}/`).then(() => {
+    window.location.reload();
+  });
 
-    axiosInstance
-        .delete(`threads/comment/${id}/`)
-        .then(() => {
-            window.location.reload()
-        })
-
-    return 
+  return;
 }

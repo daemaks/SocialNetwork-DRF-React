@@ -1,49 +1,52 @@
-import {useState, useEffect} from 'react'
-import axiosInstance from '../axios'
-import { ICommunity } from '../model'
+import { useState, useEffect } from "react";
+import axiosInstance from "../axios";
+import { ICommunity } from "../model";
 
 export function useCommunities() {
-    const [communities, setCommunities] = useState<ICommunity[]>([])
+  const [communities, setCommunities] = useState<ICommunity[]>([]);
 
-    async function fetchCommunities() {
-        const response = await axiosInstance.get<ICommunity[]>('threads/community/')
-        setCommunities(response.data)
-    }
+  async function fetchCommunities() {
+    const response = await axiosInstance.get<ICommunity[]>(
+      "threads/community/"
+    );
+    setCommunities(response.data);
+  }
 
-    useEffect(() => {
-        fetchCommunities()
-    }, [])
+  useEffect(() => {
+    fetchCommunities();
+  }, []);
 
-    return { communities }
+  return { communities };
 }
 
-export function useTagCommunities(id:any) {
-    const [communities, setCommunities] = useState<ICommunity[]>([])
-    
-    async function fetchCommunities() {
-        const response = await axiosInstance.get<ICommunity[]>(`threads/tag/${id}`)
-        setCommunities(response.data)
-    }
+export function useTagCommunities(id: any) {
+  const [communities, setCommunities] = useState<ICommunity[]>([]);
 
-    useEffect(() => {
-        fetchCommunities()
-    }, [])
+  async function fetchCommunities() {
+    const response = await axiosInstance.get<ICommunity[]>(`threads/tag/${id}`);
+    setCommunities(response.data);
+  }
 
-    return { communities }
+  useEffect(() => {
+    fetchCommunities();
+  }, []);
+
+  return { communities };
 }
 
-export function useCommunity(slug:any) {
-    const [community, setCommunity] = useState<ICommunity | null>(null)
+export function useCommunity(slug: any) {
+  const [community, setCommunity] = useState<ICommunity | null>(null);
 
-    
-    useEffect(() => {
-        fetchCommunity()
-    }, [])
-    
-    async function fetchCommunity() {
-        const response = await axiosInstance.get<ICommunity>(`threads/community/${slug}`)
-        setCommunity(response.data)
-    }
+  useEffect(() => {
+    fetchCommunity();
+  }, []);
 
-    return { community }
+  async function fetchCommunity() {
+    const response = await axiosInstance.get<ICommunity>(
+      `threads/community/${slug}`
+    );
+    setCommunity(response.data);
+  }
+
+  return { community };
 }
